@@ -226,6 +226,8 @@ $(document).ready(function(){
                     // alert("Product Stock is not available");
                     alert(resp.message);
                 }
+                // alert(resp.totalCartItems);
+                $('.totalCartItems').html(resp.totalCartItems);
                 $("#AppendCartItems").html(resp.view);
             }, error: function(){
                 alert("Error");

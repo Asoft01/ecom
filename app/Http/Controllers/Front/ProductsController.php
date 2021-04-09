@@ -299,8 +299,10 @@ class ProductsController extends Controller
 
             Cart::where('id', $data['cartid'])->update(['quantity'=> $data['qty']]);
             $userCartItems= Cart::userCartItems();
+            $totalCartItems = totalCartItems();
             return response()->json([
                 'status'=> true,
+                'totalCartItems'=> $totalCartItems,
                 'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))
             ]);
         }
