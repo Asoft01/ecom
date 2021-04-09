@@ -1,0 +1,56 @@
+installing laravel6 
+composer create-project --prefer-dist laravel/laravel ecom "6.*"
+
+php artisan serve --port=8100
+php artisan migrate 
+composer require laravel/ui="1.*" --dev
+php artisan ui vue --auth
+npm install
+npm run dev
+
+
+php artisan make:controller Admin/AdminController
+php artisan make:migration create_admins_table
+php artisan make:model Admin
+
+making seeding 
+php artisan make:seeder AdminsTableSeeder
+
+####### After writing seeding
+composer dump-autoload
+
+php artisan db:seed
+
+composer require intervention/image
+
+
+php artisan make:controller Admin/SectionController
+
+php artisan make:migration add_column_to_products
+
+Relationship 
+Lecture #23 V27:22
+
+add remove fields dynamically jquery
+
+https://www.codexworld.com/add-remove-input-fields-dynamically-using-jquery/
+
+https://jqueryvalidation.org/
+
+################ The Mail from Address under the .env file is necesssary to avoid email from entering spam
+MAIL_FROM_ADDRESS=ahammedsupersoft@gmail.com
+
+
+
+NOTE: Tutorial 104 needs is required for sending register email online_gmail smtp after the website is uploaded online
+
+Solve "Call to undefined function App\Http\Controllers\Front\str_random()"
+composer require laravel/helpers
+###################################################################
+When you create helpers according to V112, 6:25
+you need to add this in the composer.json
+"files": [
+            "app/Helpers/Helper.php"
+        ]
+
+The Helper.php needs to be created in the app/Helper folder
