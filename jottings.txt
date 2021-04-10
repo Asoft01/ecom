@@ -54,3 +54,18 @@ you need to add this in the composer.json
         ]
 
 The Helper.php needs to be created in the app/Helper folder
+
+laravel 8 (Seeding Up)
+
+v113 25:01
+If you have upgraded your project to larvel 8 then you need to make the below changes for seeding to work
+Add below namespace at the top of DatabaseSeeder.php and Other Seeder files:-
+namespace Database\Seeder;
+ 
+In addition, move all seeders files from previous database\seeds folder to database\seeders folder
+
+Finally, you need to update composer.json file to rename seeds to seeders
+
+Lastly run below commands:-
+composer dump-autoload
+php artisan db:seed
