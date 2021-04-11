@@ -262,6 +262,33 @@ $(document).ready(function(){
         })
     });
 
+    // Update Coupon Status
+    $(document).on('click', '.updateCouponStatus', function(){
+        // var status = $(this).text();
+        var status = $(this).children("i").attr("status");
+        // alert(status); return false;
+        var coupon_id= $(this).attr('coupon_id');
+        // alert(status);
+        // alert(brand_id);
+        $.ajax({
+            type: 'post',
+            url: '/admin/update-coupon-status',
+            data: {status:status, coupon_id: coupon_id},
+            success: function(resp){
+                // alert(resp['status']);
+                // alert(resp['section_id']);
+                if(resp['status']== 0){
+                    $("#coupon-"+coupon_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'>");
+                }else if(resp['status']== 1){
+                    $("#coupon-"+coupon_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'>");
+                }
+            }, error: function(){
+                alert("Error");
+            }
+        })
+    });
+
+
 
     // Confirm Deletion with Sweetalert
     //  $(".confirmDelete").click(function(){
@@ -314,4 +341,19 @@ $(document).ready(function(){
         x--; //Decrement field counter
     });
 
+     // Show/Hide Coupon Field for Manual/Automatic
+     $("#ManualCoupon").click(function(){
+        $("#couponField").show();
+    });
+
+    $("#AutomaticCoupon").click(function(){
+        $("#couponField").hide();
+    });
+    
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
 });

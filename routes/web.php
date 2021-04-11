@@ -76,7 +76,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('update-banner-status', 'BannersController@updateBannerStatus');
         Route::get('delete-banner/{id}', 'BannersController@deleteBanner');
 
-        
+        //Coupons 
+        Route::get('coupons', 'CouponsController@coupons');
+        Route::post('update-coupon-status', 'CouponsController@updateCouponStatus');
+        Route::match(['get', 'post'], 'add-edit-coupon/{id?}', 'CouponsController@addEditCoupon');
+        Route::get('delete-coupon/{id}', 'CouponsController@deleteCoupon');
     });
     
 });
