@@ -414,5 +414,32 @@ $(document).ready(function(){
             })
         });
 
+        // Apply Coupon
+        $("#ApplyCoupon").submit(function(){
+            // alert("Hello"); 
+            var user = $(this).attr("user");
+            if(user == 1){
+                // Do Nothing
+            }else{
+                alert("Please login to Apply Coupon");
+                return false;
+            }
+            var code = $("#code").val();
+            // alert(code);
+            $.ajax({
+                type: 'post',
+                data: {code: code},
+                url: "/apply-coupon",
+                success:function(resp){
+                    if(resp.message != ""){
+                        alert(resp.message);
+                    }
+                    $(".totalCartItems").html(resp.totalCartItems);
+                    $("#AppendCartItems").html(resp.view);
+                }, error:function(){
+                    alert("Error");
+                }
+            });
+        });
        
 });

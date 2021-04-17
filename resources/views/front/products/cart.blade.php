@@ -34,14 +34,14 @@
 			<tbody>
 				 <tr>
                   <td> 
-				<form class="form-horizontal">
-				<div class="control-group">
-				<label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
-				<div class="controls">
-				<input type="text" class="input-medium" placeholder="CODE">
-				<button type="submit" class="btn"> ADD </button>
-				</div>
-				</div>
+				<form id="ApplyCoupon" method="POST" action="javascript:void(0);" class="form-horizontal" @if(Auth::check()) user="1" @endif>@csrf
+					<div class="control-group">
+						<label class="control-label"><strong> COUPON CODE: </strong> </label>
+						<div class="controls">
+							<input name="code" id="code" type="text" class="input-medium" placeholder="Enter Coupon Code">
+							<button type="submit" class="btn"> APPLY </button>
+						</div>
+					</div>
 				</form>
 				</td>
                 </tr>

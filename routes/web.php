@@ -145,10 +145,10 @@ Route::namespace('Front')->group(function(){
     // Confirm Account
     Route::match(['GET', 'POST'], '/confirm/{code}', 'UsersController@confirmAccount');
 
+    // Forgot Password
+    Route::match(['GET', 'POST'], '/forgot-password', 'UsersController@forgotPassword');
+
     Route::group(['middleware'=>['auth']], function(){
-        
-        // Forgot Password
-        Route::match(['GET', 'POST'], '/forgot-password', 'UsersController@forgotPassword');
 
         //Users Account 
         Route::match(['GET', 'POST'], '/account', 'UsersController@account');
@@ -158,5 +158,8 @@ Route::namespace('Front')->group(function(){
 
         // Update User Password
         Route::post('/update-user-pwd', 'UsersController@updateUserPassword');
+
+        // Apply Coupon 
+        Route::post('/apply-coupon', 'ProductsController@applyCoupon');
     });
 });
