@@ -161,5 +161,11 @@ Route::namespace('Front')->group(function(){
 
         // Apply Coupon 
         Route::post('/apply-coupon', 'ProductsController@applyCoupon');
+
+        // Checkout
+        Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
+
+        // Add Edit Delivery Address
+        Route::match(['GET', 'POST'], '/add-edit-delivery-address/{id?}', 'ProductsController@addEditDeliveryAddress');
     });
 });

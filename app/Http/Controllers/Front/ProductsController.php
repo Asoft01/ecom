@@ -15,6 +15,8 @@ use Session;
 use Auth;
 use App\Coupon;
 use App\User;
+use App\DeliveryAddress;
+use App\Country;
 
 class ProductsController extends Controller
 {
@@ -370,40 +372,126 @@ class ProductsController extends Controller
                 // echo "<pre>";print_r($catArr); die;
 
                 // Check if coupon belongs to logged in user
-                // Get all selected users of coupon
-                $usersArr = explode(",", $couponDetails->users);
-                // Get User ID's for all selected users
-
-                foreach ($usersArr as $key => $user) {
-                    $getUserID = User::select('id')->where('email', $user)->first()->toArray();
-                    $userID[]= $getUserID['id'];
+                if(!empty($couponDetails->users)){
+                    // Get all selected users of coupon
+                    $usersArr = explode(",", $couponDetails->users);
+                    // Get User ID's for all selected users
+                    foreach ($usersArr as $key => $user) {
+                        $getUserID = User::select('id')->where('email', $user)->first()->toArray();
+                        $userID[]= $getUserID['id'];
+                    }
                 }
-
+                // Get Cart Total Amount
+                $total_amount = 0;
                 foreach ($userCartItems as $key => $item) {
                     
                     if(!in_array($item['product']['category_id'], $catArr)){
                         $message = "This coupon code is not one of the selected products!";
                     }
 
-                    if(!in_array($item['user_id'], $userID)){
-                        $message = "This coupon code is not for you!";
+                    if(!empty($couponDetails->users)){
+                        if(!in_array($item['user_id'], $userID)){
+                            $message = "This coupon code is not for you!";
+                        }
                     }
+
+                    $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);
+                    $total_amount = $total_amount + ($attrPrice['final_price']* $item['quantity']);
                 }
+                // echo $attrPrice['final_price']; die;
+                // echo $total_amount; die;
               
                 if(isset($message)){
                     $userCartItems = Cart::userCartItems();
                     $totalCartItems = totalCartItems();
+                    $couponAmount = 0;
                     return response()->json([
                         'status' => false, 
                         'message' => $message,
+                        'couponAmount' => $couponAmount,
                         'totalCartItems'=> $totalCartItems, 
                         'view'=> (String)View::make('front.products.cart_items')->with(compact('userCartItems'))
     
                     ]);
                 }else{
-                    echo "Coupon can be successfully reedemed";
+                    // echo "Coupon can be successfully reedemed"; die;
+                    // Check if amount type is fixed or percentage
+                    if($couponDetails->amount_type == "Fixed"){
+                        $couponAmount= $couponDetails->amount;
+                    }else{
+                        $couponAmount = $total_amount * ($couponDetails->amount/100);
+                    }
+                    
+                    $grand_total = $total_amount - $couponAmount;
+                    // echo $couponAmount; die;
+
+                    // Add Coupon Code and Amount in Session Variables
+                    Session::put('couponAmount', $couponAmount);
+                    Session::put('couponCode', $data['code']);
+
+                    $message = "Coupon code successfully applied. You have an availing discount!";
+                    $totalCartItems = totalCartItems(); 
+                    $userCartItems = Cart::userCartItems();
+                    return response()->json([
+                        'status' => true,
+                        'message' => $message,
+                        'totalCartItems'=> $totalCartItems, 
+                        'couponAmount'=> $couponAmount,
+                        'grand_total'=> $grand_total,
+                        'view'=> (String)View::make('front.products.cart_items')->with(compact('userCartItems'))
+                    ]);
                 }
             }
         }
+    }
+
+    public function checkout(){
+        $userCartItems = Cart::userCartItems();
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        // echo "<pre>"; print_r($deliveryAddresses); die;
+        return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses'));
+    }
+
+    public function addEditDeliveryAddress($id= null, Request $request){
+        if($id == null){
+            // Add Delivery Address
+            $title = "Add Delivery Address";
+            $address = new DeliveryAddress;
+            $message = "Delivery Address added Successfully";
+        }else {
+            // Edit Delivery Address
+            $title = "Edit Delivery Address";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+            $rules = [
+                'name'=> 'required|regex:/^[\pL\s-]+$/u',
+                'mobile' => 'required|numeric',
+            ];
+            $customMessages = [
+                'name.required' => 'Name is required',
+                'name.regex' => 'Valid Name is required',
+                'mobile.required' => 'Mobile is required',
+            ];
+            
+            $this->validate($request, $rules, $customMessages);
+            
+            $address->user_id = Auth::user()->id;
+            $address->name = $data['name'];
+            $address->address = $data['address'];
+            $address->city = $data['city'];
+            $address->state = $data['state'];
+            $address->country = $data['country'];
+            $address->pincode = $data['pincode'];
+            $address->mobile = $data['mobile'];
+            $address->save();
+            Session::put('success_message', $message);
+            return redirect('checkout');
+        }
+
+        $countries = Country::where('status', 1)->get()->toArray();
+        return view('front.products.add_edit_delivery_address')->with(compact('countries', 'title'));
     }
 }

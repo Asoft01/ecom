@@ -431,11 +431,23 @@ $(document).ready(function(){
                 data: {code: code},
                 url: "/apply-coupon",
                 success:function(resp){
+                    // alert(resp.couponAmount);
                     if(resp.message != ""){
                         alert(resp.message);
                     }
                     $(".totalCartItems").html(resp.totalCartItems);
                     $("#AppendCartItems").html(resp.view);
+                    if(resp.couponAmount >=0){
+                        $(".couponAmount").text("Rs."+resp.couponAmount);
+                    }else{
+                        $(".couponAmount").text("Rs.0");
+                    }
+                    if(resp.grand_total>= 0){
+                        $(".grand_total").text("Rs."+resp.grand_total);
+                    }
+                    // $(".grand_total").text("Rs."+resp.grand_total);
+                    // $(".couponAmount").html(resp.couponAmount);
+                    // alert(resp.couponAmount);
                 }, error:function(){
                     alert("Error");
                 }

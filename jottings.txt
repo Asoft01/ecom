@@ -69,3 +69,6 @@ Finally, you need to update composer.json file to rename seeds to seeders
 Lastly run below commands:-
 composer dump-autoload
 php artisan db:seed
+
+
+tutorial 124 needs to be rewatched because the delivery address for the radio button is not complete
