@@ -445,7 +445,23 @@ class ProductsController extends Controller
         }
     }
 
-    public function checkout(){
+    public function checkout(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo Session::get('grand_total');
+            if(empty($data['address_id'])){
+                $message = "Please select delivery address";
+                session::flash('error_message', $message);
+                return redirect()->back();
+            }
+            if(empty($data['payment_method'])){
+                $message = "Please select Payment method!";
+                session::flash('error_message', $message);
+                return redirect()->back();
+            }
+
+            // print_r($data); die;
+        }
         $userCartItems = Cart::userCartItems();
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         // echo "<pre>"; print_r($deliveryAddresses); die;
@@ -461,6 +477,8 @@ class ProductsController extends Controller
         }else {
             // Edit Delivery Address
             $title = "Edit Delivery Address";
+            $address = DeliveryAddress::find($id);
+            $message = "Delivery Address Updated Successfully";
         }
 
         if($request->isMethod('post')){
@@ -492,6 +510,13 @@ class ProductsController extends Controller
         }
 
         $countries = Country::where('status', 1)->get()->toArray();
-        return view('front.products.add_edit_delivery_address')->with(compact('countries', 'title'));
+        return view('front.products.add_edit_delivery_address')->with(compact('countries', 'title', 'address'));
+    }
+
+    public function deleteDeliveryAddress($id){
+        DeliveryAddress::where('id', $id)->delete();
+        $message = "Delivery Address deleted Successfully";
+        Session::put('success_message', $message);
+        return redirect()->back();
     }
 }

@@ -29,6 +29,8 @@ use App\Product;
 			<?php Session::forget('error_message'); ?>
         @endif	
 
+    <form id="checkoutForm" action="{{ url('/checkout') }}" method="POST">
+    @csrf()
         <table class="table table-bordered">
             <tr><td><strong> DELIVERY ADDRESS </strong> |<a href="{{ url('add-edit-delivery-address') }}"> Add </a> </td></tr>
             @foreach($deliveryAddresses as $address)
@@ -39,11 +41,10 @@ use App\Product;
                         </div>
 
                         <div class="control-grounp">
-                            <div class="controls">
-                                <label class="control-label">{{ $address['name'] }},  {{$address['address']}}, {{$address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} </label>
-                            </div>
+                            <label class="control-label">{{ $address['name'] }},  {{$address['address']}}, {{$address['city'] }} - {{ $address['pincode'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }}) </label>
                         </div>
                     </td>
+                    <td><a href="{{ url('/add-edit-delivery-address/'.$address['id']) }}">Edit</a> | <a href="{{ url('/delete-delivery-address/'.$address['id']) }}" class="addressDelete">Delete</a></td>
                 </tr>
             @endforeach
         </table>	
@@ -95,8 +96,8 @@ use App\Product;
             <tr>
                 <td colspan="6" style="text-align:right">Coupon Discount:	</td>
                 <td class="couponAmount">
-                @if(Session::has('CouponAmount'))
-                    - Rs. {{ Session::get('CouponAmount') }}
+                @if(Session::has('couponAmount'))
+                    - Rs. {{ Session::get('couponAmount') }}
                 @else
                     Rs. 0
                 @endif
@@ -104,57 +105,34 @@ use App\Product;
             </tr>
             <tr>
                 <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Rs.{{ $total_price }}- <span class="couponAmount">Rs. ) =</strong></td>
-                <td class="label label-important" style="display:block"> <strong class="grand_total"> Rs.{{ $total_price - Session::get('CouponAmount') }}</strong></td>
+                <td class="label label-important" style="display:block"> <strong class="grand_total"> Rs.{{ $grand_total = $total_price - Session::get('couponAmount') }}
+                <?php Session::put('grand_total', $grand_total) ?>
+                </strong></td>
             </tr>
             </tbody>
         </table>
 		
         <table class="table table-bordered">
-        <tbody>
+            <tbody>
                 <tr>
-                <td> 
-            <form id="ApplyCoupon" method="POST" action="javascript:void(0);" class="form-horizontal" @if(Auth::check()) user="1" @endif>@csrf
-                <div class="control-group">
-                    <label class="control-label"><strong> PAYMENT METHODS: </strong> </label>
-                    <div class="controls">
-                       
-                    </div>
-                </div>
-            </form>
-            </td>
-            </tr>
-            
-        </tbody>
-		</table>
-			
-			<!-- <table class="table table-bordered">
-			 <tr><th>ESTIMATE YOUR SHIPPING </th></tr>
-			 <tr> 
-			 <td>
-				<form class="form-horizontal">
-				  <div class="control-group">
-					<label class="control-label" for="inputCountry">Country </label>
-					<div class="controls">
-					  <input type="text" id="inputCountry" placeholder="Country">
-					</div>
-				  </div>
-				  <div class="control-group">
-					<label class="control-label" for="inputPost">Post Code/ Zipcode </label>
-					<div class="controls">
-					  <input type="text" id="inputPost" placeholder="Postcode">
-					</div>
-				  </div>
-				  <div class="control-group">
-					<div class="controls">
-					  <button type="submit" class="btn">ESTIMATE </button>
-					</div>
-				  </div>
-				</form>				  
-			  </td>
-			  </tr>
-            </table> -->		
-	<a href="{{ '/cart' }}" class="btn btn-large"><i class="icon-arrow-left"></i> Back to Cart </a>
-	<a href="{{ url('checkout') }}" class="btn btn-large pull-right">Place Order <i class="icon-arrow-right"></i></a>
-	</div>
+                    <td> 
+                        <div class="control-group">
+                            <label class="control-label"><strong> PAYMENT METHODS: </strong> </label>
+                            <div class="controls">
+                            <span>
+                                <input type="radio" name="payment_method" id="COD" value="COD"><strong>COD</strong> &nbsp;&nbsp;
+                                <input type="radio" name="payment_method" id="Paypal" value="Paypal"><strong>Paypal</strong>
+                            </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>  
+            </tbody>
+		</table>	
+        <a href="{{ '/cart' }}" class="btn btn-large"><i class="icon-arrow-left"></i> Back to Cart </a>
+
+        <button type="submit" href="{{ url('checkout') }}" class="btn btn-large pull-right">Place Order <i class="icon-arrow-right"></i></button>
+	</form>
+    </div>
     
 @endsection

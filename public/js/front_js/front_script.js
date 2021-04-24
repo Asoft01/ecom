@@ -453,5 +453,11 @@ $(document).ready(function(){
                 }
             });
         });
-       
+    // Delete Delivery Address
+    $(document).on('click', '.addressDelete', function(){
+        var result = confirm("Want to delete this address");
+        if(!result){
+            return false;
+        }
+    });
 });

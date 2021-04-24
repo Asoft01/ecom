@@ -39,29 +39,29 @@
 		<div class="span4">	
 			<div class="well">
             Enter your delivery address details<br/><br/>
-            <form id="deliveryAddressForm" action="{{ url('/add-edit-delivery-address') }}" method="post">
+            <form id="deliveryAddressForm" @if(empty($address['id'])) action="{{ url('/add-edit-delivery-address') }}" @else action="{{ url('/add-edit-delivery-address/'.$address['id']) }}" @endif method="post">
                 @csrf
 			  <div class="control-group">
 				<label class="control-label" for="name">Name</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="name" name="name" placeholder="Enter Name" required="">
+				  <input class="span3"  type="text" id="name" name="name" placeholder="Enter Name" value="{{ $address['name'] }}" required="">
 				</div>
               </div>
               <div class="control-group">
 				<label class="control-label" for="address">Address</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="address" name="address" placeholder="Enter Address" >
+				  <input class="span3"  type="text" id="address" name="address" value="{{ $address['address'] }}" placeholder="Enter Address" >
 				</div>
               </div>
               <div class="control-group">
 				<label class="control-label" for="city">City</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="city" name="city" placeholder="Enter City" >
+				  <input class="span3"  type="text" id="city" name="city" value="{{ $address['city'] }}" placeholder="Enter City" >
 				</div>
               </div> <div class="control-group">
 				<label class="control-label" for="state">State</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="state" name="state" placeholder="Enter State" >
+				  <input class="span3"  type="text" id="state" name="state" value="{{ $address['state'] }}" placeholder="Enter State" >
 				</div>
 			  </div> 
 			  <div class="control-group">
@@ -70,7 +70,7 @@
 				 <select class="span3" id="country" name="country">
                      <option value="">Select Country</option>
                      @foreach ($countries as $country)
-                         <option value="{{ $country['country_name'] }}" >{{ $country['country_name'] }}</option>
+                         <option value="{{ $country['country_name'] }}" @if($country['country_name']== $address['country']) selected="" @endif>{{ $country['country_name'] }}</option>
                      @endforeach
                  </select>
 				</div>
@@ -78,13 +78,13 @@
               <div class="control-group">
 				<label class="control-label" for="mobile">Mobile</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="mobile" name="mobile" placeholder="Enter Mobile" >
+				  <input class="span3"  type="text" id="mobile" name="mobile" value="{{ $address['mobile'] }}"  placeholder="Enter Mobile" >
 				</div>
               </div>
               <div class="control-group">
 				<label class="control-label" for="pincode">Pincode</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="pincode" name="pincode" placeholder="Enter Pincode">
+				  <input class="span3"  type="text" id="pincode" name="pincode"  value="{{ $address['pincode'] }}" placeholder="Enter Pincode">
 				</div>
               </div>
               
