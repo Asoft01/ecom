@@ -32,7 +32,7 @@ use App\Product;
     <form id="checkoutForm" action="{{ url('/checkout') }}" method="POST">
     @csrf()
         <table class="table table-bordered">
-            <tr><td><strong> DELIVERY ADDRESS </strong> |<a href="{{ url('add-edit-delivery-address') }}"> Add </a> </td></tr>
+            <tr><td><strong> DELIVERY ADDRESS </strong> | <a href="{{ url('add-edit-delivery-address') }}"> Add </a> </td></tr>
             @foreach($deliveryAddresses as $address)
                 <tr>
                     <td>
@@ -120,8 +120,8 @@ use App\Product;
                             <label class="control-label"><strong> PAYMENT METHODS: </strong> </label>
                             <div class="controls">
                             <span>
-                                <input type="radio" name="payment_method" id="COD" value="COD"><strong>COD</strong> &nbsp;&nbsp;
-                                <input type="radio" name="payment_method" id="Paypal" value="Paypal"><strong>Paypal</strong>
+                                <input type="radio" name="payment_gateway" id="COD" value="COD"><strong>COD</strong> &nbsp;&nbsp;
+                                <input type="radio" name="payment_gateway" id="Paypal" value="Paypal"><strong>Paypal</strong>
                             </span>
                             </div>
                         </div>

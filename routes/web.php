@@ -153,6 +153,12 @@ Route::namespace('Front')->group(function(){
         //Users Account 
         Route::match(['GET', 'POST'], '/account', 'UsersController@account');
 
+        // Users Orders 
+        Route::get('/orders', 'OrdersController@orders');
+
+        // User Order Details 
+        Route::get('/orders/{id}', 'OrdersController@orderDetails');
+
         // Check User Password
         Route::post('check-user-pwd', 'UsersController@chkUserPassword');
 
@@ -170,6 +176,9 @@ Route::namespace('Front')->group(function(){
 
         // Delete Delivery Address 
         Route::get('/delete-delivery-address/{id}', 'ProductsController@deleteDeliveryAddress');
+
+        // Thanks 
+        Route::get('/thanks', 'ProductsController@thanks');
         
     });
 });
