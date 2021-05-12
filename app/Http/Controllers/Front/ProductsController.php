@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
@@ -20,6 +21,7 @@ use App\Country;
 use App\Order;
 use App\OrdersProduct;
 use DB;
+use App\Sms;
 
 class ProductsController extends Controller
 {
@@ -528,6 +530,28 @@ class ProductsController extends Controller
             DB::commit();
 
             if($data['payment_gateway']== "COD"){
+                // Send Order SMS
+                $message = "Dear Customer, your order ".$order_id. " has been successfully placed with Prymable Tech Company. We will intimate you once order is shipped.";
+                $mobile = Auth::user()->mobile;
+                Sms::sendSms($message, $mobile);
+
+                $orderDetails = Order::with('orders_products')->where('id', $order_id)->first()->toArray();
+                // $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
+
+                // echo "<pre>"; print_r($orderDetails); die;
+
+                // Send Order Email
+                $email = Auth::user()->email;
+                $messageData = [
+                    'email'=> $email,
+                    'name' => Auth::user()->name,
+                    'order_id'=> $order_id,
+                    'orderDetails'=> $orderDetails
+                ];
+                Mail::send('emails.order', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Order Placed - Prymable Tech');
+                });
+
                 return redirect('/thanks');
             }else{
                 echo "Prepaid Method coming soon"; die;

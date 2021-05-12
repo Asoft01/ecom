@@ -80,4 +80,10 @@ class Product extends Model
         // return $discounted_price;
         return array('product_price'=> $proAttrPrice['price'], 'final_price' => $final_price, 'discount'=>$discount);
     }
+
+    public static function getProductImage($product_id){
+        $getProductImage = Product::select('main_image')->where('id', $product_id)->first()->toArray();
+        // echo $getProductImage['main_image']; die;
+        return $getProductImage['main_image'];
+    }
 }

@@ -72,3 +72,10 @@ php artisan db:seed
 
 
 tutorial 124 needs to be rewatched because the delivery address for the radio button is not complete
+
+############ Updating the table #######################
+php artisan make:migration update_orders_table
+
+
+################ barcode api for laravel ###############
+https://github.com/milon/barcode

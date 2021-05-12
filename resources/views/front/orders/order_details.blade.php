@@ -1,3 +1,4 @@
+<?php use App\Product; ?>
 @extends('layouts.front_layout.front_layout')
 @section('content')
 <div class="span9">
@@ -22,6 +23,18 @@
                     <td>Order Status</td>
                     <td>{{ $orderDetails['order_status'] }}</td>
                 </tr>
+                @if(!empty($orderDetails['courier_name']))
+                <tr>
+                    <td>Courier Name</td>
+                    <td>{{ $orderDetails['courier_name'] }}</td>
+                </tr>
+                @endif
+                @if(!empty($orderDetails['tracking_number']))
+                <tr>
+                    <td>Tracking Number</td>
+                    <td>{{ $orderDetails['tracking_number'] }}</td>
+                </tr>
+                @endif     
                 <tr>
                     <td>Order Total</td>
                     <td>{{ $orderDetails['grand_total'] }}</td>
@@ -88,6 +101,7 @@
 		<div class="span8">	
 			<table class="table table-striped table-bordered">
                 <tr>
+                    <th>Product Image</th>
                     <th>Product Code</th>
                     <th>Product Name</th>
                     <th>Product Size</th>
@@ -97,6 +111,11 @@
                 </tr>
                 @foreach ($orderDetails['orders_products'] as $product)
                     <tr>
+                        {{-- <td><?php// echo Product::getProductImage($product['product_id']); ?></td> --}}
+                        <td>
+                            <?php $getProductImage= Product::getProductImage($product['product_id']); ?>
+                            <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img width="80px" src="{{ asset('images/product_images/small/'.$getProductImage) }}">
+                        </td>
                         <td>{{ $product['product_code'] }}</td>
                         <td>{{ $product['product_name'] }}</td>
                         <td>{{ $product['product_size'] }}</td>

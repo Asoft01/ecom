@@ -356,4 +356,18 @@ $(document).ready(function(){
     $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
     //Money Euro
     $('[data-mask]').inputmask()
+
+    // Show Courier Name and Tracking Number in case of Shipped Order Status
+    $("#courier_name").hide();
+    $("#tracking_number").hide();
+    $("#order_status").on("change", function(){
+        // alert(this.value); return false;
+        if(this.value == "Shipped"){
+            $("#courier_name").show();
+            $("#tracking_number").show();
+        }else{
+            $("#courier_name").hide();
+            $("#tracking_number").hide();
+        }
+    });
 });

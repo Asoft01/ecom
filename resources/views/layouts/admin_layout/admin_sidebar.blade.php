@@ -117,6 +117,8 @@
                   <p>Brands</p>
                 </a>
               </li>
+
+              <!-- Categories -->
               @if(Session::get('page')=="categories")
                 <?php $active= "active"; ?>
               @else
@@ -129,6 +131,7 @@
                 </a>
               </li>
 
+            <!-- Products -->
             @if(Session::get('page')=="products")
               <?php $active= "active"; ?>
             @else
@@ -152,7 +155,8 @@
                 <p>Banners</p>
               </a>
             </li>
-            
+
+            <!-- Coupons -->
             @if(Session::get('page')=="coupons")
               <?php $active= "active"; ?>
             @else
@@ -164,6 +168,22 @@
                 <p>Coupons</p>
               </a>
             </li>
+            <!-- Coupons Ends here -->
+
+             <!-- Coupons -->
+             @if(Session::get('page')=="orders")
+              <?php $active= "active"; ?>
+            @else
+              <?php $active = ""; ?>
+            @endif
+            <li class="nav-item">
+              <a href="{{ url('admin/orders') }}" class="nav-link {{ $active }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Orders</p>
+              </a>
+            </li>
+            <!-- Coupons Ends here -->
+
             </ul>
           </li>
           
