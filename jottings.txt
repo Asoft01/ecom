@@ -86,3 +86,8 @@ For resolving allowed memory size error
 allowed memory size of bytes exhausted laravel composer
 
 COMPOSER_MEMORY_LIMIT = -1 composer require milon/barcode
+
+installing dompdf
+composer require dompdf/dompdf
+
+https://htmlpdfapi.com/blog/free_html5_invoice_templates

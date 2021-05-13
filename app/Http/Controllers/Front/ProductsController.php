@@ -366,9 +366,20 @@ class ProductsController extends Controller
                     $message = "This Coupon is expired";
                 }
 
+                // echo Auth::user()->id; die;
+
                 // Check if coupon is from selected categories
                 // Get all selected categories from coupon
                 $catArr = explode(",",$couponDetails->categories);
+
+                // Check if coupon is for single or multiple times
+                if($couponDetails->coupon_type == "Single Times"){
+                    // Check in Orders Table if coupon is already avail by the user
+                    $couponCount = Order::where(['coupon_code' => $data['code'], 'user_id'=> Auth::user()->id])->count();
+                    if($couponCount >= 1){
+                        $message = "This coupon is already availed by you!";
+                    }
+                }
 
                 // Get Cart Items 
                 $userCartItems = Cart::userCartItems();
@@ -557,11 +568,15 @@ class ProductsController extends Controller
                 echo "Prepaid Method coming soon"; die;
             }
 
-            echo "Order Placed"; die;
-
-            
+            echo "Order Placed"; die;            
         }
         $userCartItems = Cart::userCartItems();
+
+        if(count($userCartItems) == 0){
+            $message = "Shopping Cart is empty! Please add products to Checkout.";
+            Session::put('error_message', $message);
+            return redirect('cart');
+        }
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         // echo "<pre>"; print_r($deliveryAddresses); die;
         return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses'));

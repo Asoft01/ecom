@@ -45,6 +45,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
+                <?php Session::forgot('success_message'); ?>
             @endif
             @if(Session::has('error_message'))
                 <div class="alert alert-danger" role="alert" style="margin-top:10px;">
@@ -53,7 +54,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
-            @endif
+                <?php Session::forgot('error_message'); ?>			
+            @endif	
+            
             <h3> {{ $productDetails['product_name'] }}  </h3>
             <small>- {{ $productDetails['brand']['name'] }}</small>
             <hr class="soft"/>
