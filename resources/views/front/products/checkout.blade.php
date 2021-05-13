@@ -54,7 +54,7 @@ use App\Product;
                 <th>Product</th>
                 <th colspan="2">Description</th>
                 <th>Quantity/Update</th>
-                <th>Unit Price</th>
+                <th>Price</th>
                 <th>Category/Product Discount </th>
                 <th>Sub Total</th>
             </tr>
@@ -77,8 +77,8 @@ use App\Product;
                     {{ $item['quantity'] }}
                 </td>
                 {{-- <td>Rs. {{ $attrPrice }}</td> --}}
-                <td>Rs. {{ $attrPrice['product_price'] }}</td>
-                <td>Rs. {{ $attrPrice['discount'] }}</td>
+                <td>Rs. {{ $attrPrice['product_price'] * $item['quantity'] }}</td>
+                <td>Rs. {{ $attrPrice['discount'] * $item['quantity'] }}</td>
                 <td>Rs. {{ $attrPrice['final_price'] * $item['quantity'] }}</td>
                 {{-- <td>Rs. {{ $attrPrice * $item['quantity'] }}</td> --}}
                 </tr>

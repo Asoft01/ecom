@@ -79,3 +79,10 @@ php artisan make:migration update_orders_table
 
 ################ barcode api for laravel ###############
 https://github.com/milon/barcode
+
+composer require milon/barcode
+
+For resolving allowed memory size error
+allowed memory size of bytes exhausted laravel composer
+
+COMPOSER_MEMORY_LIMIT = -1 composer require milon/barcode

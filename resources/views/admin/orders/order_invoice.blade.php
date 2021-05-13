@@ -23,7 +23,11 @@
     <div class="row">
         <div class="col-xs-12">
     		<div class="invoice-title">
-    			<h2>Invoice</h2><h3 class="pull-right">Order # {{ $orderDetails['id'] }}</h3>
+                <h2>Invoice</h2><h3 class="pull-right">Order # {{ $orderDetails['id'] }}</h3>
+                <br>
+                <span class="pull-right">
+                    <?php echo DNS1D::getBarcodeHTML($orderDetails['id'], 'C39'); ?>
+                </span>
     		</div>
     		<hr>
     		<div class="row">
@@ -105,6 +109,9 @@
                                         Code: {{ $product['product_code'] }} <br>
                                         Size: {{ $product['product_size'] }} <br>
                                         Color: {{ $product['product_color'] }} <br>
+                                        <?php //echo DNS1D::getBarcodeHTML($product['product_code'], 'C39'); ?>
+                                        <?php echo DNS2D::getBarcodeHTML($product['product_code'], 'QRCODE'); ?>
+
                                     </td>
     								<td class="text-center">INR {{ $product['product_price'] }}</td>
     								<td class="text-center">{{ $product['product_qty'] }} </td>
