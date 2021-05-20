@@ -26,6 +26,8 @@ class ProductsController extends Controller
         }])->get();
         // $products = json_decode(json_encode($products));
         // echo "<pre>"; print_r($products); die;
+        // return response()->json(['products'=> $products]);
+        // echo "<pre>"; print_r($products); die;
         return view('admin.products.products')->with(compact('products'));
     }
 
