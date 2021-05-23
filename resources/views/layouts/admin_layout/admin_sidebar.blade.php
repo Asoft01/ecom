@@ -170,7 +170,7 @@
             </li>
             <!-- Coupons Ends here -->
 
-             <!-- Coupons -->
+             <!-- Orders -->
              @if(Session::get('page')=="orders")
               <?php $active= "active"; ?>
             @else
@@ -180,6 +180,19 @@
               <a href="{{ url('admin/orders') }}" class="nav-link {{ $active }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Orders</p>
+              </a>
+            </li>
+            <!-- Orders Ends here -->
+
+            @if(Session::get('page')=="shipping_charges")
+              <?php $active= "active"; ?>
+            @else
+              <?php $active = ""; ?>
+            @endif
+            <li class="nav-item">
+              <a href="{{ url('admin/view-shipping-charges') }}" class="nav-link {{ $active }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Shipping Charges</p>
               </a>
             </li>
             <!-- Coupons Ends here -->

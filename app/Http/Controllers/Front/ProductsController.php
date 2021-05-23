@@ -381,7 +381,6 @@ class ProductsController extends Controller
                     }
                 }
 
-
                 // Get Cart Items 
                 $userCartItems = Cart::userCartItems();
                 // Check if any Item belong to coupon category

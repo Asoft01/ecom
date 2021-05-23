@@ -91,3 +91,5 @@ installing dompdf
 composer require dompdf/dompdf
 
 https://htmlpdfapi.com/blog/free_html5_invoice_templates
+
+php artisan make:migration create_shipping_charges_table
