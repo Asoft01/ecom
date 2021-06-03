@@ -93,3 +93,22 @@ composer require dompdf/dompdf
 https://htmlpdfapi.com/blog/free_html5_invoice_templates
 
 php artisan make:migration create_shipping_charges_table
+
+php artisan make:migration drop_column_from_shipping_charges_table
+
+ Schema::table('shipping_charges', function (Blueprint $table) {
+    //
+    $table->dropColumn('shipping_charges');
+});
+
+php artisan migrate
+php artisan make:migration add_column_to_shipping_charges_table
+
+
+for paypal testing 
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+
+payu money installation
+composer require softon/indipay
+
+#159 Integrate Paypal in Laravel (III) _ IPN _ Instant Payment Notification _ Paypal Payment Verification

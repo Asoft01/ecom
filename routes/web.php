@@ -91,6 +91,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 
         // Shipping Charges
         Route::get('view-shipping-charges', 'ShippingController@viewShippingCharges');
+        Route::match(['get', 'post'], 'edit-shipping-charges/{id}', 'ShippingController@editShippingCharges');
+        Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
     });
     
 });
@@ -189,6 +191,18 @@ Route::namespace('Front')->group(function(){
 
         // Thanks 
         Route::get('/thanks', 'ProductsController@thanks');
+        
+        // Paypal
+        Route::get('/paypal', 'PaypalController@paypal');
+
+        // Paypal Success
+        Route::get('/paypal/success', 'PaypalController@success');
+
+        // Paypal Fail
+        Route::get('/paypal/fail', 'PaypalController@fail');
+        
+        // Paypal IPN
+        Route::any('/paypal/ipn', 'PaypalController@ipn');
         
     });
 });

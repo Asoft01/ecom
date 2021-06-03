@@ -96,7 +96,6 @@ $(document).ready(function(){
         })
     });
 
-
     // Update Category Status
     // $(".updateCategoryStatus").click(function(){
        $(document).on('click', '.updateCategoryStatus', function(){
@@ -288,6 +287,32 @@ $(document).ready(function(){
         })
     });
 
+     // Update Shipping Status
+    // $(".updateBrandStatus").click(function(){
+        $(document).on('click', '.updateShippingStatus', function(){
+            // var status = $(this).text();
+            var status = $(this).children("i").attr("status");
+            // alert(status); return false;
+            var shipping_id= $(this).attr('shipping_id');
+            // alert(status);
+            // alert(shipping_id);
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-shipping-status',
+                data: {status:status, shipping_id: shipping_id},
+                success: function(resp){
+                    // alert(resp['status']);
+                    // alert(resp['section_id']);
+                    if(resp['status']== 0){
+                        $("#shipping-"+shipping_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'>");
+                    }else if(resp['status']== 1){
+                        $("#shipping-"+shipping_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'>");
+                    }
+                }, error: function(){
+                    alert("Error");
+                }
+            })
+        });
 
 
     // Confirm Deletion with Sweetalert

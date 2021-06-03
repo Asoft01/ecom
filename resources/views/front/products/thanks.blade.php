@@ -8,7 +8,7 @@
         </ul>
         <h3>  THANKS </h3>	
         <hr class="soft"/>
-        <div class="center">
+        <div align="center">
             <h3>YOUR ORDER HAS BEEN PLACED SUCCESSFULLY</h3>
             <p>Your Order Number is {{ Session::get('order_id') }} and grand total is INR {{ Session::get('grand_total') }}</p>
         </div>
@@ -20,4 +20,6 @@
 <?php 
     Session::forget('grand_total');
     Session::forget('order_id');
+    Session::forget('couponCode');
+    Session::forget('couponAmount');
 ?>

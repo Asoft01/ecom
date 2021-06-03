@@ -82,9 +82,14 @@
                                 <td>{{ $orderDetails['coupon_code'] }}</td>
                             </tr>
                             <tr>
-                                <td>Coupon Amount</td>
-                                <td>{{ $orderDetails['coupon_amount'] }}</td>
-                            </tr>
+                              <td>Coupon Amount</td>
+                              <td>{{ $orderDetails['coupon_amount'] }}</td>
+                          </tr>
+                          <tr>
+                            <td>Payment Method</td>
+                              <td>{{ $orderDetails['payment_method'] }}</td>
+                          </tr>
+                        
                             <tr>
                                 <td>Payment Gateway</td>
                                 <td>{{ $orderDetails['payment_gateway'] }}</td>

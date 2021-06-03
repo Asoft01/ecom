@@ -28,10 +28,11 @@
             @if(Session::has('success_message'))
                 <div class="alert alert-success alert-dismissable fade show" role="alert" style="margin-top:10px;">
                 {{ Session::get('success_message') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <?php Session::forget('success_message'); ?>
             @endif
             <div class="card">
               <div class="card-header">
@@ -44,7 +45,11 @@
                   <tr>
                     <th>ID</th>
                     <th>Country</th>
-                    <th>Shipping Charges</th>
+                    <th>0 - 500g</th>
+                    <th>501 - 1000g</th>
+                    <th>1001 - 2000g</th>
+                    <th>2001 - 5000g</th>
+                    <th>Above 5000g</th>
                     <th>Status</th>
                     <th>Updated at</th>
                     <th>Actions</th>
@@ -56,18 +61,22 @@
                         <tr>
                             <td>{{ $shipping['id'] }}</td>
                             <td>{{ $shipping['country'] }}</td>
-                            <td> INR {{ $shipping['shipping_charges'] }}</td>
+                            <td> INR {{ $shipping['0_500g'] }}</td>
+                            <td> INR {{ $shipping['501_1000g'] }}</td>
+                            <td> INR {{ $shipping['1001_2000g'] }}</td>
+                            <td> INR {{ $shipping['2001_5000g'] }}</td>
+                            <td> INR {{ $shipping['above_5000g'] }}</td>
                             <td>
                                 @if($shipping['status'] == 1)
-                                   <a class="updateShippingStatus" href="javascript:void(0)"> <i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i> </a>
+                                   <a class="updateShippingStatus" id="shipping-{{ $shipping['id'] }}" shipping_id="{{ $shipping['id'] }}" href="javascript:void(0)"> <i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i> </a>
                                 @else 
-                                <a class="updateShippingStatus" href="javascript:void(0)"> <i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i> </a>
+                                <a class="updateShippingStatus" id="shipping-{{ $shipping['id'] }}" shipping_id="{{ $shipping['id'] }}" href="javascript:void(0)"> <i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i> </a>
                                 @endif
                             </td>
                             <td>{{ date('d-m-Y', strtotime($shipping['updated_at'])) }}</td>
                             
                             <td style="width:120px;">
-                                <a title="Update Shipping Charges" href=""><i class="fas fa-edit"></i></a>
+                                <a title="Update Shipping Charges" href="{{ url('admin/edit-shipping-charges/'.$shipping['id']) }}"><i class="fas fa-edit"></i></a>
                                 &nbsp; &nbsp;
                             </td>
                         </tr>

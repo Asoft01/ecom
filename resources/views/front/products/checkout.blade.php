@@ -37,7 +37,7 @@ use App\Product;
                 <tr>
                     <td>
                         <div class="control-grounp" style="float:left; margin-top: -2px; margin-right: 5px;">
-                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}">
+                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price={{ $total_price }} coupon_amount = {{ Session::get('couponAmount') }}>
                         </div>
 
                         <div class="control-grounp">
@@ -96,15 +96,20 @@ use App\Product;
             <tr>
                 <td colspan="6" style="text-align:right">Coupon Discount:	</td>
                 <td class="couponAmount">
-                @if(Session::has('couponAmount'))
-                    - Rs. {{ Session::get('couponAmount') }}
-                @else
-                    Rs. 0
-                @endif
+                    @if(Session::has('couponAmount'))
+                        - Rs. {{ Session::get('couponAmount') }}
+                    @else
+                        Rs. 0
+                    @endif
                 </td>
             </tr>
             <tr>
-                <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Rs.{{ $total_price }}- <span class="couponAmount">Rs. ) =</strong></td>
+                <td colspan="6" style="text-align:right">Shipping Charges:	</td>
+                <td class="shipping_charges">Rs. 0 </td>
+            </tr>
+                
+            <tr>
+                <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Rs.{{ $total_price }}- <span class="couponAmount">Rs.0 </span> + <span class="shipping_charges"> Rs.0 </span> ) =</strong></td>
                 <td class="label label-important" style="display:block"> <strong class="grand_total"> Rs.{{ $grand_total = $total_price - Session::get('couponAmount') }}
                 <?php Session::put('grand_total', $grand_total) ?>
                 </strong></td>
