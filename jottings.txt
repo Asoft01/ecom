@@ -111,4 +111,13 @@ for paypal testing
 payu money installation
 composer require softon/indipay
 
+https://github.com/softon/indipay
+
 #159 Integrate Paypal in Laravel (III) _ IPN _ Instant Payment Notification _ Paypal Payment Verification
+if in case "Time out" error comes then run below command 
+COMPOSER_MEMORY_LIMIT = -1 composer require softon/indipay
+
+Then run
+php artisan vendor:publish --provider="Softon\Indipay\IndipayServiceProvider"
+
+video 165 17:57 needs to be done cos it also touch aspect of payumoney

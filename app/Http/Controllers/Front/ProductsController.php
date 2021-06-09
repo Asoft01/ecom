@@ -521,10 +521,12 @@ class ProductsController extends Controller
             if($data['payment_gateway'] == "COD"){
                 $payment_method = "COD";
                 $payment_gateway = "COD";
+                $order_status = "New";
             }else{
                 // echo "Coming Soon"; die;
                 $payment_method = 'Prepaid';
                 $payment_gateway = "Paypal";
+                $order_status = "Pending";
             }
 
             // Get Delivery Address from address ID
@@ -560,9 +562,11 @@ class ProductsController extends Controller
             $order->shipping_charges= $shipping_charges;
             $order->coupon_code= Session::get('couponCode');
             $order->coupon_amount= Session::get('couponAmount');
-            $order->order_status= "New";
+            // $order->order_status= "New";
+            $order->order_status= $order_status;
             $order->payment_method= $payment_method;
-            $order->payment_gateway= $payment_gateway;
+            $order->payment_gateway = $data['payment_gateway'];
+            // $order->payment_gateway= $payment_gateway;
             $order->courier_name = "Adeleke";
             $order->tracking_number= "123456";
             $order->grand_total= Session::get('grand_total');
@@ -592,6 +596,14 @@ class ProductsController extends Controller
                 $cartItem->product_price = $getDiscountedAttrPrice['final_price'];
                 $cartItem->product_qty = $item['quantity'];
                 $cartItem->save();
+
+                if($data['payment_gateway'] == "COD"){
+                    // Reduce the Stock Script Starts
+                    $getProductStock = ProductsAttribute::where(['product_id' => $item['product_id'], 'size' => $item['size']])->first()->toArray();
+                    // dd($getProductStock); die;
+                    $newStock = $getProductStock['stock'] - $item['quantity'];
+                    ProductsAttribute::where(['product_id' => $item['product_id'], 'size' => $item['size']])->update(['stock' => $newStock]);
+                }
             }
 
             // Insert Order ID in Session Variable
@@ -627,7 +639,11 @@ class ProductsController extends Controller
                 // echo "Prepaid Method coming soon"; die;
                 // Paypal - Redirect user to PayPal Page after placing order
                 return redirect('paypal');
-            }else{
+            }else if($data['payment_gateway'] == "Payumoney"){
+                // Paymoney - Redirect User to Payumoney Page after placing order
+                return redirect('payumoney');
+            } 
+            else{
                 echo "Other Prepaid Method Coming Soon"; die;
             }
 

@@ -202,7 +202,9 @@ Route::namespace('Front')->group(function(){
         Route::get('/paypal/fail', 'PaypalController@fail');
         
         // Paypal IPN
-        Route::any('/paypal/ipn', 'PaypalController@ipn');
+        Route::post('/paypal/ipn', 'PaypalController@ipn');
         
+        // Payumoney
+        Route::get('/payumoney', 'PayumoneyController@payumoney');
     });
 });

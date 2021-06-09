@@ -65,6 +65,16 @@ class PaypalController extends Controller
             // $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
 
             // echo "<pre>"; print_r($orderDetails); die;
+            
+            // Reduce Stock Script Starts
+            foreach($orderDetails['orders_products'] as $order){
+                $getProductStock = ProductsAttribute::where(['product_id' => $item['product_id'], 'size' => $item['size']])->first()->toArray();
+                // dd($getProductStock); die;
+                $newStock = $getProductStock['stock'] - $item['quantity'];
+                ProductsAttribute::where(['product_id' => $item['product_id'], 'size' => $item['size']])->update(['stock' => $newStock]);
+            }
+
+            // Reduce Stock Script Ends 
 
             // Send Order Email
             $email = Auth::user()->email;
