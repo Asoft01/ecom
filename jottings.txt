@@ -120,4 +120,7 @@ COMPOSER_MEMORY_LIMIT = -1 composer require softon/indipay
 Then run
 php artisan vendor:publish --provider="Softon\Indipay\IndipayServiceProvider"
 
-video 165 17:57 needs to be done cos it also touch aspect of payumoney
+v 165 17:57 needs to be done cos it also touch aspect of payumoney
+
+v 166
+https://github.com/saravanakumargn/All-India-Pincode-Directory/blob/master/all-india-pincode-html-excel.xlsx

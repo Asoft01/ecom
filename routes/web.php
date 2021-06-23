@@ -160,6 +160,10 @@ Route::namespace('Front')->group(function(){
     // Forgot Password
     Route::match(['GET', 'POST'], '/forgot-password', 'UsersController@forgotPassword');
 
+    // Check Delivery Pincode
+
+    Route::post('/check-pincode', 'ProductsController@checkPincode');
+
     Route::group(['middleware'=>['auth']], function(){
 
         //Users Account 
@@ -207,4 +211,6 @@ Route::namespace('Front')->group(function(){
         // Payumoney
         Route::get('/payumoney', 'PayumoneyController@payumoney');
     });
+
+
 });

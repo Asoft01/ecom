@@ -466,6 +466,24 @@ $(document).ready(function(){
         var shipping_charges = $(this).attr("shipping_charges");
         var total_price = $(this).attr("total_price");
         var coupon_amount = $(this).attr("coupon_amount");
+        var codpincodeCount = $(this).attr("codpincodeCount");
+        var prepaidpincodeCount = $(this).attr("prepaidpincodeCount");
+
+        if(codpincodeCount > 0){
+            // Show COD Method
+            $(".codMethod").show();
+        }else{
+            // Hide COD Method
+            $(".codMethod").hide();
+        }
+
+        if(prepaidpincodeCount>0){
+            // Show Prepaid Method
+            $(".prepaidMethod").show();
+        }else{
+            // Hide Prepaid Method
+            $(".prepaidMethod").hide();
+        }
         if(coupon_amount == ""){
             coupon_amount= 0;
         }
@@ -475,4 +493,22 @@ $(document).ready(function(){
         // alert(grand_total);
         $(".grand_total").html("Rs."+grand_total);
     });
+
+    $("#checkPincode").click(function(){
+        var pincode = $("#pincode").val();
+        // alert(pincode);
+        if(pincode == ""){
+            // alert("Please enter delivery pincode"); return false;
+        }
+        $.ajax({
+            type: 'post',
+            data: {pincode: pincode},
+            url: '/check-pincode',
+            success: function(resp){
+                alert(resp);
+            },error: function(){
+                alert("Error");
+            }
+        });
+    })
 });

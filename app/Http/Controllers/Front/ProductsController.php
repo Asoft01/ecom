@@ -213,6 +213,16 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
+
+            if(empty($data['quantity'] <=0 )){
+                $data['quantity'] = 1;
+            }
+            if(empty($data['size'])){
+                $message = "Please select size";
+                session::flash('error_message', $message);
+                return redirect()->back();
+            }
+
             // Check if product stock is available or not
             $getProductStock = ProductsAttribute::where(['product_id'=>$data['product_id'], 'size'=> $data['size']])->first()->toArray();
             // echo $getProductStock['stock']; die;
@@ -499,7 +509,14 @@ class ProductsController extends Controller
             // echo $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value['country']); die;
             $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value['country']);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+
+            // Check if delivery pincode exists in COD Pincodes list
+            $deliveryAddresses[$key]['codpincodeCount'] = DB::table('cod_pincodes')->where('pincode', $value['pincode'])->count();
+            // Check if delivery pincode exists in Prepaid Pincodes list
+            $deliveryAddresses[$key]['prepaidpincodeCount'] = DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count();
+            
         }
+        // echo "<pre>"; print_r($deliveryAddresses); die;
 
         if($request->isMethod('post')){
             $data = $request->all();
@@ -713,5 +730,26 @@ class ProductsController extends Controller
         $message = "Delivery Address deleted Successfully";
         Session::put('success_message', $message);
         return redirect()->back();
+    }
+
+    public function checkPincode(Request $request){
+        // if($request->ajax()){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            if(is_numeric($data['pincode']) && $data['pincode'] > 0 && $data['pincode'] == round($data['pincode'], 0)){
+                $codPincodeCount = DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count();
+                $prepaidPincodeCount = DB::table('prepaid_pincodes')->where('pincode', $data['pincode'])->count();
+    
+                if($codPincodeCount == 0 && $prepaidPincodeCount == 0){
+                    echo "This pincode is not available for delivery"; die;
+                }else{
+                    echo "This pincode is available for delivery"; die;
+                }   
+            }else{
+                echo "Please enter valid pincode"; die;
+            }
+        }
     }
 }

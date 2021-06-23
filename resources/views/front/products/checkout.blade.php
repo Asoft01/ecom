@@ -37,7 +37,7 @@ use App\Product;
                 <tr>
                     <td>
                         <div class="control-grounp" style="float:left; margin-top: -2px; margin-right: 5px;">
-                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price={{ $total_price }} coupon_amount = {{ Session::get('couponAmount') }}>
+                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price={{ $total_price }} coupon_amount = {{ Session::get('couponAmount') }} codpincodeCount = "{{ $address['codpincodeCount'] }}" prepaidpincodeCount = "{{ $address['prepaidpincodeCount'] }}">
                         </div>
 
                         <div class="control-grounp">
@@ -125,9 +125,14 @@ use App\Product;
                             <label class="control-label"><strong> PAYMENT METHODS: </strong> </label>
                             <div class="controls">
                             <span>
-                                <input type="radio" name="payment_gateway" id="COD" value="COD"><strong>COD</strong> &nbsp;&nbsp;
-                                <input type="radio" name="payment_gateway" id="Paypal" value="Paypal"><strong>Paypal</strong>
-                                <input type="radio" name="payment_gateway" id="Payumoney" value="Payumoney"><strong>Payumoney</strong>
+                                <span class="codMethod">
+                                    <input type="radio" name="payment_gateway" id="COD" value="COD"><strong>COD</strong> &nbsp;&nbsp;
+                                </span>
+
+                                <span class="prepaidMethod">
+                                    <input type="radio" name="payment_gateway" id="Paypal" value="Paypal"><strong>Paypal</strong>
+                                    <input type="radio" name="payment_gateway" id="Payumoney" value="Payumoney"><strong>Payumoney</strong>
+                                </span>
                             </span>
                             </div>
                         </div>

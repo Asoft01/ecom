@@ -73,14 +73,19 @@
                             Rs.{{ $productDetails['product_price'] }}
                         @endif
                     </h4>
-                        <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="span2 pull-left" required="">
+                        <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="span2 pull-left">
                             <option value="">Select Size</option>
                             @foreach ($productDetails['attributes'] as $attribute)
                                 <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
                             @endforeach
                         </select>
-                        <input name="quantity" type="number" class="span1" placeholder="Qty." required/>
+                        <input name="quantity" type="number" class="span1" placeholder="Qty."/>
                         <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                        <br><br>
+
+                        <strong>Delivery</strong>
+                        <input style="width:120px" type="number" name="pincode" id="pincode" placeholder="Check Pincode">
+                        <button type="button" id="checkPincode">Go</button>
                     </div>
                 </div>
             </form>
