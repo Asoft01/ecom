@@ -60,6 +60,20 @@
             <h3> {{ $productDetails['product_name'] }}  </h3>
             <small>- {{ $productDetails['brand']['name'] }}</small>
             <hr class="soft"/>
+
+            @if(count($groupProducts)> 0)
+                <div>
+                    <div style="margin-top:5px;">
+                        <strong>More Colors</strong>
+                    </div>
+                    <!-- View Related Products --->
+                    @foreach ($groupProducts as $product)
+                        <a href="{{ url('product/'.$product['id']) }}"><img style="width: 50px;" src="{{ asset('images/product_images/small/'.$product['main_image']) }}" alt=""></a>
+                    @endforeach
+                </div>
+                <br/>
+            @endif
+
             <small>{{  $total_stock }} items in stock</small>
             <form action="{{ url('add-to-cart') }}" method="POST" class="form-horizontal qtyFrm">
                 @csrf

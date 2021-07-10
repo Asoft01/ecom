@@ -52,6 +52,9 @@ $(document).ready(function(){
         // alert(status);
         // alert(section_id);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'post',
             url: '/admin/update-section-status',
             data: {status:status, section_id: section_id},
@@ -79,6 +82,9 @@ $(document).ready(function(){
         // alert(status);
         // alert(brand_id);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'post',
             url: '/admin/update-brand-status',
             data: {status:status, brand_id: brand_id},
@@ -96,6 +102,36 @@ $(document).ready(function(){
         })
     });
 
+     // Update User Status
+    // $(".updateUserStatus").click(function(){
+        $(document).on('click', '.updateUserStatus', function(){
+            // var status = $(this).text();
+            var status = $(this).children("i").attr("status");
+            // alert(status); return false;
+            var user_id= $(this).attr('user_id');
+            // alert(status);
+            // alert(user_id);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-user-status',
+                data: {status:status, user_id: user_id},
+                success: function(resp){
+                    // alert(resp['status']);
+                    // alert(resp['section_id']);
+                    if(resp['status']== 0){
+                        $("#user-"+user_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'>");
+                    }else if(resp['status']== 1){
+                        $("#user-"+user_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'>");
+                    }
+                }, error: function(){
+                    alert("Error");
+                }
+            })
+        });    
+
     // Update Category Status
     // $(".updateCategoryStatus").click(function(){
        $(document).on('click', '.updateCategoryStatus', function(){
@@ -105,6 +141,9 @@ $(document).ready(function(){
         // alert(status);
         // alert(section_id);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'post',
             url: '/admin/update-category-status',
             data: {status:status, category_id: category_id},
@@ -161,6 +200,9 @@ $(document).ready(function(){
         // alert(section_id);
         
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },  
             type: 'post',
             url: '/admin/update-product-status',
             data: {status:status, product_id: product_id},
@@ -192,6 +234,9 @@ $(document).ready(function(){
         // alert(section_id);
         
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'post',
             url: '/admin/update-attribute-status',
             data: {status:status, attribute_id: attribute_id},
@@ -217,6 +262,9 @@ $(document).ready(function(){
         // alert(section_id);
         
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'post',
             url: '/admin/update-image-status',
             data: {status:status, image_id: image_id},
@@ -244,6 +292,9 @@ $(document).ready(function(){
         // alert(status);
         // alert(brand_id);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'post',
             url: '/admin/update-banner-status',
             data: {status:status, banner_id: banner_id},
@@ -270,6 +321,9 @@ $(document).ready(function(){
         // alert(status);
         // alert(brand_id);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'post',
             url: '/admin/update-coupon-status',
             data: {status:status, coupon_id: coupon_id},

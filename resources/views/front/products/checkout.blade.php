@@ -37,7 +37,7 @@ use App\Product;
                 <tr>
                     <td>
                         <div class="control-grounp" style="float:left; margin-top: -2px; margin-right: 5px;">
-                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price={{ $total_price }} coupon_amount = {{ Session::get('couponAmount') }} codpincodeCount = "{{ $address['codpincodeCount'] }}" prepaidpincodeCount = "{{ $address['prepaidpincodeCount'] }}">
+                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price={{ $total_price }} coupon_amount = "{{ Session::get('couponAmount') }}" codpincodeCount = "{{ $address['codpincodeCount'] }}" prepaidpincodeCount = "{{ $address['prepaidpincodeCount'] }}">
                         </div>
 
                         <div class="control-grounp">

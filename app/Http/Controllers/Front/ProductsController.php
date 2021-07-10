@@ -184,7 +184,14 @@ class ProductsController extends Controller
         $relatedProducts = Product::where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(3)->inRandomOrder()->get()->toArray();
        
         // dd($relatedProducts); die;
-        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts'));
+
+        // Display related Products
+        $groupProducts = array();
+        if(!empty($productDetails['group_code'])){
+            $groupProducts = Product::select('id', 'main_image')->where('id', '!=', $id)->where(['group_code' => $productDetails['group_code'], 'status'=> 1])->get()->toArray();
+            // dd($groupProducts); die;
+        }
+        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts', 'groupProducts'));
     }
 
     // First Way of getting the prices based on the attribute price in ajax request
@@ -217,6 +224,7 @@ class ProductsController extends Controller
             if(empty($data['quantity'] <=0 )){
                 $data['quantity'] = 1;
             }
+
             if(empty($data['size'])){
                 $message = "Please select size";
                 session::flash('error_message', $message);
@@ -522,6 +530,48 @@ class ProductsController extends Controller
             $data = $request->all();
             // print_r($data); die;
             // echo Session::get('grand_total');
+
+            // Website Security Checks
+
+            // Fetch user carts 
+            // echo "<pre>"; print_r($userCartItems); die;
+            foreach($userCartItems as $key => $cart){
+                    // Prevent Disable product to order
+                //    echo $product_status = Product::getProductStatus($cart['product_id']);
+                $product_status = Product::getProductStatus($cart['product_id']);
+                if($product_status == 0){
+                    //    Product::deleteCartProduct($cart['product_id']);
+                    $message= $cart['product']['product_name']. " is not available so please remove from cart";
+                    session::flash('error_message', $message);
+                    return redirect("/cart");
+                }
+                // Prevent Out of stock products to order 
+                $product_stock = Product::getProductStock($cart['product_id'], $cart['size']);
+                if($product_stock == 0){
+                    $message = $cart['product']['product_name']. " is not available because it is out of stock so please remove from cart";
+                    session::flash('error_message', $message);
+                    return redirect("/cart");
+                }
+
+                // Prevent Disabled or delete Attributes to order
+                $getAttributeCount = Product::getAttributeCount($cart['product_id'], $cart['size']);
+                if($getAttributeCount == 0){
+                    $message = $cart['product']['product_name']. " is not active so please remove from cart";
+                    session::flash('error_message', $message);
+                    return redirect("/cart");
+                }
+
+                
+                // Prevent Disabled Category Products to Order
+                // echo $category_status = Product::getCategoryStatus($cart['product']['category_id']); die;
+                $category_status = Product::getCategoryStatus($cart['product']['category_id']); 
+                if($category_status == 0){
+                    $message = $cart['product']['product_name']. "not available under the specified category";
+                    session::flash('error_message', $message);
+                    return redirect('/cart');
+                }
+            }
+            // } die;
             if(empty($data['address_id'])){
                 $message = "Please select delivery address";
                 session::flash('error_message', $message);
@@ -532,8 +582,6 @@ class ProductsController extends Controller
                 session::flash('error_message', $message);
                 return redirect()->back();
             }
-
-
 
             if($data['payment_gateway'] == "COD"){
                 $payment_method = "COD";
