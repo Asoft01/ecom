@@ -168,6 +168,9 @@ Route::namespace('Front')->group(function(){
 
     Route::post('/check-pincode', 'ProductsController@checkPincode');
 
+    // Search Products
+    Route::get('/search-products', 'ProductsController@listing');
+
     Route::group(['middleware'=>['auth']], function(){
 
         //Users Account 

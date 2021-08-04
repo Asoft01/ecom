@@ -105,7 +105,27 @@ class ProductsController extends Controller
             // echo $url = Route::getFacadeRoot()->current()->uri();
             $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url'=> $url, 'status'=> 1])->count();
-            if($categoryCount> 0){
+
+            if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
+                $search_product = $_REQUEST['search'];
+                $categoryDetails['breadcrumbs'] = $search_product;
+                $categoryDetails['catDetails']['category_name'] = $search_product;
+                $categoryDetails['catDetails']['description'] = "Search Products for ".$search_product;
+
+                // echo "<pre>"; print_r($categoryDetails); die;
+                $categoryProducts   = Product::with('brand')->where(function($query) use($search_product) {
+                    $query->where('product_name', 'like', '%'.$search_product.'%')
+                    ->orWhere('product_code', 'like', '%'.$search_product.'%')
+                    ->orWhere('product_color', 'like', '%'.$search_product.'%')
+                    ->orWhere('description', 'like', '%'.$search_product.'%');
+                })->where('status', 1);
+                $categoryProducts = $categoryProducts->get();
+                // echo "<pre>"; print_r($categoryProducts); die;
+
+                $page_name= "Search Results";
+                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'page_name'));
+             
+            } else if($categoryCount> 0){
                 $categoryDetails = Category::catDetails($url);
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
                 // If Sort option selected by User 
@@ -118,7 +138,7 @@ class ProductsController extends Controller
                 $fabricArray = $productFilters['fabricArray'];
                 $sleeveArray = $productFilters['sleeveArray'];
                 $patternArray = $productFilters['patternArray'];
-                $fitArray = $productFilters['fitArray'];
+                $fitArray =     $productFilters['fitArray'];
                 $occasionArray = $productFilters['occasionArray'];
 
 
@@ -128,8 +148,7 @@ class ProductsController extends Controller
             }else{
                 abort(404);
             }
-        }
-       
+        }  
     }
 
        ///////////////////// This works without ajax //////////////////
@@ -221,8 +240,11 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
-            if(empty($data['quantity'] <=0 )){
-                $data['quantity'] = 1;
+            // if(empty($data['quantity'] <=0 || $data['quantity'] = "" )){
+            //     $data['quantity'] = 1;
+            // }
+            if($data['quantity'] <=0 || $data['quantity'] ==""){
+                $data['quantity'] =1;
             }
 
             if(empty($data['size'])){
@@ -502,7 +524,7 @@ class ProductsController extends Controller
             // echo "<pre>"; print_r($item); die;
             // dd($item); die;
             $product_weight= $item['product']['product_weight'];
-            $total_weight= $total_weight + $product_weight;
+            $total_weight= $total_weight + ($product_weight * $item['quantity']);
             $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);
             $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);
         }

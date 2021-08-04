@@ -15,7 +15,6 @@ class UsersController extends Controller
         // $users = User::get()->toArray();
         // dd($users); die;
         return view('admin.users.users')->with(compact('users'));
-        
     }
 
     public function updateUserStatus(Request $request){
