@@ -102,6 +102,36 @@ $(document).ready(function(){
         })
     });
 
+       // Update CMS Status
+    // $(".updateBrandStatus").click(function(){
+        $(document).on('click', '.updateCmsPageStatus', function(){
+            // var status = $(this).text();
+            var status = $(this).children("i").attr("status");
+            // alert(status); return false;
+            var page_id= $(this).attr('page_id');
+            // alert(status);
+            // alert(page_id);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-cms-page-status',
+                data: {status:status, page_id: page_id},
+                success: function(resp){
+                    // alert(resp['status']);
+                    // alert(resp['section_id']);
+                    if(resp['status']== 0){
+                        $("#page-"+page_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'>");
+                    }else if(resp['status']== 1){
+                        $("#page-"+page_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'>");
+                    }
+                }, error: function(){
+                    alert("Error");
+                }
+            })
+        });
+
      // Update User Status
     // $(".updateUserStatus").click(function(){
         $(document).on('click', '.updateUserStatus', function(){

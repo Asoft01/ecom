@@ -96,7 +96,12 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 
         // Users 
         Route::get('users', 'UsersController@users');
+
         Route::post('update-user-status', 'UsersController@updateUserStatus');
+
+        // CMS Pages
+        Route::get('cms-pages', 'CmsController@cmsPages');
+        Route::post('update-cms-page-status', 'CmsController@updateCmsPageStatus');
     });
     
 });

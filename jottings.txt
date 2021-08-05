@@ -124,3 +124,13 @@ v 165 17:57 needs to be done cos it also touch aspect of payumoney
 
 v 166
 https://github.com/saravanakumargn/All-India-Pincode-Directory/blob/master/all-india-pincode-html-excel.xlsx
+
+php artisan make:migration create_cms_pages_table
+
+php artisan make:seeder CmsPagesTableSeeder
+
+php artisan make:model CmsPage
+
+php artisan db:seed
+
+composer dump-autoload

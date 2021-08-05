@@ -80,6 +80,7 @@
     $("#categories").DataTable();
     $("#products").DataTable();
     $("#users").DataTable();
+    $("#cmspages").DataTable();
   });
 </script>
 
