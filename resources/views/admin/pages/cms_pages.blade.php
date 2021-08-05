@@ -58,7 +58,7 @@
                             <td>{{ $page->url }}</td>
                             <td>{{ $page->created_at }}</td>
                             <td>
-                                <a title="Edit CMS Page" href="{{ url('admin/add-edit-page/'.$page->id) }}"><i class="fas fa-edit"></i></a>
+                                <a title="Edit CMS Page" href="{{ url('admin/add-edit-cms-page/'.$page->id) }}"><i class="fas fa-edit"></i></a>
                                 &nbsp; &nbsp;
                                 <a title="Delete CMS Page" href="javascript:void(0)" class="confirmDelete" record="page" recordid="{{ $page->id }}"><i class="fas fa-trash" style="color:red"></i></a>
                                 &nbsp; &nbsp;

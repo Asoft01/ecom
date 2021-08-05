@@ -102,6 +102,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         // CMS Pages
         Route::get('cms-pages', 'CmsController@cmsPages');
         Route::post('update-cms-page-status', 'CmsController@updateCmsPageStatus');
+        Route::match(['get', 'post'], 'add-edit-cms-page/{id?}', 'CmsController@addEditCmsPage');
+        Route::get('delete-page/{id}', 'CmsController@deleteCmsPage');
     });
     
 });
