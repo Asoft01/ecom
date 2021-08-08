@@ -78,7 +78,7 @@ class CmsController extends Controller
     }
 
     public function deleteCmsPage($id){
-        // Delete Category
+        // Delete Cms Page
         CmsPage::where('id', $id)->delete();
         $message = 'Cms Page been deleted successfully';
         session::flash('success_message', $message);

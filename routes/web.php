@@ -16,6 +16,7 @@
 // });
 
 use App\Category;
+use App\CmsPage;
 
 // Auth::routes();
 
@@ -129,6 +130,12 @@ Route::namespace('Front')->group(function(){
     // Route::get('/contact-us', function(){
     //     echo "test";die;
     // });
+
+    // CMS Routes
+    $cmsUrls = CmsPage::select('url')->where('status', 1)->get()->pluck('url')->toArray();
+    foreach ($cmsUrls as $url){
+        Route::get('/'.$url, 'CmsController@cmsPage');
+    }
 
     // Product Detail Route
     Route::get('/product/{id}', 'ProductsController@detail');
