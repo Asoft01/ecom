@@ -21,18 +21,18 @@ class Order extends Model
         $orderDetails['order_id'] =         $orderDetails['id'];
         $orderDetails['order_date'] =       $orderDetails['created_at'];
         $orderDetails['pickup_location'] =  "Test";
-        $orderDetails['channel_id'] =       "19909200";
+        $orderDetails['channel_id'] =       "1855855";
         $orderDetails['comment'] =          "Test10";
         $orderDetails['billing_customer_name'] = $orderDetails['name'];
         $orderDetails['billing_last_name'] = "";
-        $orderDetails['billing_address'] = "";
-        $orderDetails['billing_address_2'] = $orderDetails['address'];
+        $orderDetails['billing_address'] = $orderDetails['address'];
+        $orderDetails['billing_address_2'] = "";
         $orderDetails['billing_city'] = $orderDetails['city'];
         $orderDetails['billing_pincode'] = $orderDetails['pincode'];
         $orderDetails['billing_state'] = $orderDetails['state'];
         $orderDetails['billing_country'] = $orderDetails['country'];
-        $orderDetails['billing_email'] = $orderDetails['address'];
-        $orderDetails['billing_phone'] = $orderDetails['address'];
+        $orderDetails['billing_email'] = $orderDetails['email'];
+        $orderDetails['billing_phone'] = $orderDetails['mobile'];
         $orderDetails['shipping_is_billing'] = true;
         $orderDetails['shipping_customer_name'] = $orderDetails['name'];
         $orderDetails['shipping_last_name'] = "";
@@ -70,7 +70,8 @@ class Order extends Model
         $url = "https://apiv2.shiprocket.in/v1/external/auth/login";
         curl_setopt($c, CURLOPT_URL, $url);
         curl_setopt($c, CURLOPT_POST, 1);
-        curl_setopt($c, CURLOPT_POSTFIELDS, "email=prymable@gmail.com&password=Adeleke1992");
+        // curl_setopt($c, CURLOPT_POSTFIELDS, "email=prymable@gmail.com&password=Adeleke1992");
+        curl_setopt($c, CURLOPT_POSTFIELDS, "email=stackdevelopers2@gmail.com&password=123456");
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         $server_output = curl_exec($c);
         curl_close($c);
@@ -89,5 +90,16 @@ class Order extends Model
         $result = curl_exec($c);
         curl_close($c);
         print_r($result); die;
+        if(isset($result['status_code']) && $result['status_code'] == 1){
+            // Update Orders Table Column is pushed to 1
+            Order::where('id', $order_id)->update(['is_pushed' => 1]);
+            $status = "true";
+            $message = "Order Successfully pushed to ShipRocket";
+        }else{
+            $status = "false";
+            $message = "Order not pushed to ShipRocket. Please Contact Admin";
+        }
+        return array(['status' => $status, 'message' => $message]);
+
     }
 }
