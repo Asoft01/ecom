@@ -10,7 +10,6 @@ class APIController extends Controller
 {
     public function pushOrder($id){
         $getResults = Order::pushOrder($id);
-        return response()->json(['status' => $getResults, 'message' => $getResults['message']]);
+        return response()->json(['status' => $getResults['status'], 'message' => $getResults['message']]);
     }
-
 }

@@ -40,6 +40,16 @@ class OrdersController extends Controller
             $data= $request->all();
             // echo "<pre>"; print_r($data); die;
             // Update Order Status 
+
+            if(empty($data['courier_name']) && empty($data['tracking_number']) && $data['order_status'] == "Shipped"){
+                $getResults = Order::pushOrder($data['order_id']);
+                if(!isset($getResults['status']) || (isset($getResults['status']) && $getResults['status'] == "false")){
+                    Session::put('error_message', $getResults['message']);
+                    return redirect()->back();
+                }    
+            }
+
+            // Update Order Status
             Order::where('id', $data['order_id'])->update(['order_status'=> $data['order_status']]);
             Session::put('success_message', 'Order Status has been updated Successfully');
             

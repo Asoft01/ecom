@@ -19,6 +19,19 @@
                 </div>
                 {{ Session::forget('success_message') }}
             @endif
+
+            @if(Session::has('error_message'))
+                <div class="col-sm-12">
+                    <div class="alert alert-warning alert-dismissable fade show" role="alert" style="margin-top:10px;">
+                    {{ Session::get('error_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+                {{ Session::forget('error_message') }}
+            @endif
+            
           <div class="col-sm-6">
             <h1>Catalogues</h1>
           </div>
@@ -244,7 +257,13 @@
                                 <tr>
                                   <td colspan="2">
                                     @foreach ($orderLog as $log)
-                                      <strong>{{ $log['order_status'] }}</strong><br>
+                                      <strong>
+                                        {{ $log['order_status'] }} 
+                                      </strong> 
+                                          @if($orderDetails['is_pushed'] ==1)
+                                            <span style="color:green">Order Pushed to ShipRocket </span>
+                                          @endif
+                                          <br>
                                       {{ date('j F, Y, g:i a', strtotime($log['created_at'])) }}
                                       <hr><hr>
                                     @endforeach  
