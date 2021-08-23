@@ -13,8 +13,9 @@ class CmsController extends Controller
         // echo $currentRoute = Route::getFacadeRoot()->current()->url(); die;
         // echo $currentRoute = url()->current(); die;
         $currentRoute = url()->current(); 
-        // echo $currentRoute = str_replace("http://localhost:3000/", "", $currentRoute);
-        $currentRoute = str_replace("http://localhost:3000/", "", $currentRoute);
+        // echo $currentRoute = str_replace("http://localhost:3000/", "", $currentRoute); 
+        // echo $currentRoute = str_replace("http://127.0.0.1:3000/", "", $currentRoute); 
+        $currentRoute = str_replace("http://127.0.0.1:3000/", "", $currentRoute);
         $cmsRoute = CmsPage::where('status', 1)->get()->pluck('url')->toArray();
         // dd($cmsRoute); die;
 
@@ -24,6 +25,5 @@ class CmsController extends Controller
         }else{
             abort(404);
         }
-
     }
 }

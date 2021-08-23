@@ -224,7 +224,22 @@
                 <p>Shipping Charges</p>
               </a>
             </li>
-            <!-- Coupons Ends here -->
+
+            @if(Auth::guard('admin')->user()->type == "superadmin" || Auth::guard('admin')->user()->type=="admin")
+              <!-- Admins / SubAdmins -->
+              @if(Session::get('page')=="admins_subadmins")
+                <?php $active= "active"; ?>
+              @else
+                <?php $active = ""; ?>
+              @endif
+              <li class="nav-item">
+                <a href="{{ url('admin/admins-subadmins') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Admins / Sub Admins </p>
+                </a>
+              </li>
+            @endif
+              <!-- Coupons Ends here -->
 
             </ul>
           </li>

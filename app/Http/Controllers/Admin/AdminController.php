@@ -51,7 +51,7 @@ class AdminController extends Controller
             $this->validate($request, $rules, $customMessages);
             
 
-            if(Auth::guard('admin')->attempt(['email'=> $data['email'], 'password'=>$data['password']])){
+            if(Auth::guard('admin')->attempt(['email'=> $data['email'], 'password'=>$data['password'], 'status' => 1])){
                 return redirect('admin/dashboard');
             }else{
                 Session::flash('error_message', 'Invalid Email or Password');
@@ -148,5 +148,31 @@ class AdminController extends Controller
             return redirect()->back();
         }
         return view('admin.update_admin_details');
+    }
+
+    public function adminsSubadmins(){
+        //This works with the left sidebar
+        if(Auth::guard('admin')->user()->type=="subadmin"){
+            Session::flash('error_message', 'This feature is resricted');
+            return redirect('admin/dashboard');
+        }
+        Session::put('page', 'admins_subadmins');
+        $admins_subadmins = Admin::get();
+        return view('admin.admins_subadmins.admins_subadmins')->with(compact('admins_subadmins'));
+    }
+
+    public function updateAdminStatus(Request $request){
+        if($request->ajax()){
+            $data= $request->all();
+            // echo "<pre>"; print_r($data); die;
+            if($data['status'] == "Active"){
+                $status= 0;
+            }else{
+                $status = 1;
+            }
+
+            Admin::where('id', $data['admin_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status, 'admin_id'=> $data['admin_id']]);
+        }
     }
 }
