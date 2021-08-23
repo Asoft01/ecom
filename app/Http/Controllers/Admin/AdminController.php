@@ -175,4 +175,12 @@ class AdminController extends Controller
             return response()->json(['status'=>$status, 'admin_id'=> $data['admin_id']]);
         }
     }
+
+    public function deleteAdminSubAdmin($id){
+        // Delete Admin Sub Admin
+        Admin::where('id', $id)->delete();
+        $message = "Admin/Sub-Admin has been deleted Successfully";
+        Session::flash('success_message',$message);
+        return redirect()->back();
+    }
 }

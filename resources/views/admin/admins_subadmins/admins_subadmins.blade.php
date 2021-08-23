@@ -70,12 +70,14 @@
                                 @endif
                             </td>
                             <td>
-                                <a title="Set Roles/Permission" href="{{ url('admin/update-roles/'.$admin->id) }}"><i class="fas fa-unlock"></i></a>
-                                &nbsp; &nbsp;
-                                <a title="Edit Admin/Sub-Admin" href="{{ url('admin/add-edit-admin-subadmin/'.$admin->id) }}"><i class="fas fa-edit"></i></a>
-                                &nbsp; &nbsp;
-                                {{-- <a class="confirmDelete" name="Category" href="{{ url('admin/delete-product/'.$product->id) }}">Delete</a> --}}
-                                <a title="Delete Admin/Sub-Admin" href="javascript:void(0)" class="confirmDelete" record="admin" recordid="{{ $admin->id }}"><i class="fas fa-trash" style="color:red"></i></a>
+                                @if($admin->type != "superadmin")
+                                    <a title="Set Roles/Permission" href="{{ url('admin/update-roles/'.$admin->id) }}"><i class="fas fa-unlock"></i></a>
+                                    &nbsp; &nbsp;
+                                    <a title="Edit Admin/Sub-Admin" href="{{ url('admin/add-edit-admin-subadmin/'.$admin->id) }}"><i class="fas fa-edit"></i></a>
+                                    &nbsp; &nbsp;
+                                    {{-- <a class="confirmDelete" name="Category" href="{{ url('admin/delete-product/'.$product->id) }}">Delete</a> --}}
+                                    <a title="Delete Admin/Sub-Admin" href="javascript:void(0)" class="confirmDelete" record="admin" recordid="{{ $admin->id }}"><i class="fas fa-trash" style="color:red"></i></a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
