@@ -165,6 +165,7 @@ Route::namespace('Front')->group(function(){
     // Route::get('/login-register', 'UsersController@loginRegister');
     // To cancel the error Route [login] not defined.
 
+    // The as login is redirected to the middleware funcion declared in the Authenticate.php
     Route::get('/login-register', ['as' => 'login', 'uses'=> 'UsersController@loginRegister']);
 
     Route::post('/login', 'UsersController@loginUser');
