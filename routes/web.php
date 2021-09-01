@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('/admin')->namespace('Admin')->group(function(){
     // All the Admin Routes will be defined here :-
     Route::match(['get', 'post'], '/', 'AdminController@login');
-
+    
     Route::group(['middleware' => ['admin']], function () {
         Route::get('dashboard', 'AdminController@dashboard');
         Route::get('settings', 'AdminController@settings');
@@ -192,6 +192,9 @@ Route::namespace('Front')->group(function(){
     // Search Products
     Route::get('/search-products', 'ProductsController@listing');
 
+    // Contact Route Page 
+    Route::match(['GET', 'POST'], '/contact', 'CmsController@contact');
+    
     Route::group(['middleware'=>['auth']], function(){
 
         //Users Account 

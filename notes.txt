@@ -134,3 +134,8 @@ php artisan make:model CmsPage
 php artisan db:seed
 
 composer dump-autoload
+
+
+
+Username:stackdevelopers
+Password:laravelwithamit
