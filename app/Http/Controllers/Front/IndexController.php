@@ -27,6 +27,9 @@ class IndexController extends Controller
         // echo "<pre>"; print_r($newProducts); die;
 
         $page_name = "index";
-        return view('front.index')->with(compact('page_name', 'featuredItemsChunk', 'featuredItemsCount', 'newProducts'));
+        $meta_title = "E-commerce Website by Stack Developers";
+        $meta_description = "Subscribe to Soft Developers";
+        $meta_keywords = "buy the product, subscribe to our product, get discounted price";
+        return view('front.index')->with(compact('page_name', 'featuredItemsChunk', 'featuredItemsCount', 'newProducts', 'meta_title', 'meta_description', 'meta_keywords'));
     }
 }

@@ -94,7 +94,10 @@ class ProductsController extends Controller
     
                 // echo "<pre>"; print_r($categoryDetails); 
                 // echo "<pre>"; print_r($categoryProducts); die;
-                return view('front.products.ajax_products_listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+                $meta_title = $categoryDetails['catDetails']['meta_title'];
+                $meta_description = $categoryDetails['catDetails']['meta_description'];
+                $meta_keywords = $categoryDetails['catDetails']['meta_keywords'];
+                return view('front.products.ajax_products_listing')->with(compact('categoryDetails', 'categoryProducts', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
              
             }else{
                 abort(404);
@@ -143,7 +146,12 @@ class ProductsController extends Controller
 
 
                 $page_name= "listing";
-                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'page_name'));
+                // echo "<pre>"; print_r($categoryDetails); die;
+                $meta_title =       $categoryDetails['catDetails']['meta_title'];
+                $meta_description = $categoryDetails['catDetails']['meta_description'];
+                $meta_keywords =    $categoryDetails['catDetails']['meta_keywords'];
+
+                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'page_name', 'meta_title', 'meta_description', 'meta_keywords'));
              
             }else{
                 abort(404);
@@ -210,7 +218,11 @@ class ProductsController extends Controller
             $groupProducts = Product::select('id', 'main_image')->where('id', '!=', $id)->where(['group_code' => $productDetails['group_code'], 'status'=> 1])->get()->toArray();
             // dd($groupProducts); die;
         }
-        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts', 'groupProducts'));
+        
+        $meta_title =       $productDetails['product_name'];
+        $meta_description = $productDetails['description'];
+        $meta_keywords =    $productDetails['product_name'];
+        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords'));
     }
 
     // First Way of getting the prices based on the attribute price in ajax request
@@ -308,6 +320,11 @@ class ProductsController extends Controller
 
     public function cart(){
         $userCartItems = Cart::userCartItems();
+        
+        $meta_title = "";
+        $meta_description = "";
+        $meta_keywords = "";
+
         // echo "<pre>"; print_r($userCartItems); die;
         return view('front.products.cart')->with(compact('userCartItems'));
     }

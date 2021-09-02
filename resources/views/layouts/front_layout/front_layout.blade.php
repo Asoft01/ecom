@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Stack Developers online Shopping cart</title>
+	@if (!empty($meta_title))
+	<title>{{ $meta_title }}</title>
+	@else
+	<title>Laravel E-Commerce Website designed by A-Soft</title>
+	@endif
+
+	@if(!empty($meta_description))
+	<meta name="description" content="{{ $meta_description }}">
+	@else
+	<meta name="description" content="This is the E-Commerce Website Designed from Scratch">
+	@endif
+
+	@if(!empty($meta_keywords))
+		<meta name="keywords" content="{{ $meta_keywords }}">
+	@else
+		<meta name="keywords" content="buy product, get discounts">
+	@endif
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="csrf-token" content="{{ csrf_token() }}"/>
 	<!-- Front style -->
