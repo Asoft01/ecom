@@ -23,7 +23,11 @@ class CmsController extends Controller
 
         if(in_array($currentRoute, $cmsRoute)){
             $cmsPageDetails = CmsPage::where('url', $currentRoute)->first()->toArray();
-            return view('front.pages.cms_page')->with(compact('cmsPageDetails'));
+            
+            $meta_title = $cmsPageDetails['meta_title'];
+            $meta_description = $cmsPageDetails['meta_description'];
+            $meta_keywords = $cmsPageDetails['meta_keywords'];
+            return view('front.pages.cms_page')->with(compact('cmsPageDetails', 'meta_title', 'meta_description', 'meta_keywords'));
         }else{
             abort(404);
         }

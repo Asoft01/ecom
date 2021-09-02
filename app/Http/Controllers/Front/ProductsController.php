@@ -321,12 +321,12 @@ class ProductsController extends Controller
     public function cart(){
         $userCartItems = Cart::userCartItems();
         
-        $meta_title = "";
-        $meta_description = "";
-        $meta_keywords = "";
+        $meta_title = "Shopping Cart - E-Commerce Website";
+        $meta_description = "View Shopping Cart of E-Commerce Website";
+        $meta_keywords = "Shopping Cart, E-Commerce Website";
 
         // echo "<pre>"; print_r($userCartItems); die;
-        return view('front.products.cart')->with(compact('userCartItems'));
+        return view('front.products.cart')->with(compact('userCartItems', 'meta_title', 'meta_description', 'meta_keywords'));
     }
 
     public function updateCartItemQty(Request $request){
@@ -753,8 +753,11 @@ class ProductsController extends Controller
 
             echo "Order Placed"; die;            
         }
+
         
-        return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses', 'total_price'));
+        $meta_title = "Checkout Page - E-Commerce Website";
+        
+        return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses', 'total_price', 'meta_title'));
     }
 
     public function thanks(){
