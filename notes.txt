@@ -146,3 +146,22 @@ https://www.seoptimer.com/robots-txt-generator
 
 Username:stackdevelopers
 Password:laravelwithamit
+
+
+$ php artisan make:migration create_admins_roles_table
+
+Admins/ SubAdmins Roles & Permissions
+
+Super Admin - 1
+Admins many 
+Sub Admins - many
+
+Admins/SubAdmins - Add/ Edit / Delete / View / Set Roles / Permissions
+
+View Access - Only Video, Can't edit or Delete
+View/Edit Access - View and Edit Possible but no Delete
+Full Access - View, Edit or Delete
+
+            View    Edit    Full
+Categories   1        0      0
+Products -   1        1      1

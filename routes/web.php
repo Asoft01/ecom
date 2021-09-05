@@ -111,8 +111,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::match(['get', 'post'], 'add-edit-admin-subadmin/{id?}', 'AdminController@addEditAdminSubadmin');
         
         Route::post('update-admin-status', 'AdminController@updateAdminStatus');
-        Route::get('delete-admin/{id}', 'AdminController@deleteAdminSubAdmin');
-
+        Route::get('delete-admin/{id}', 'AdminController@deleteAdminSubAdmin'); 
+        Route::match(['get', 'post'], 'update-role/{id}', 'AdminController@updateRole');
     });
     
 });

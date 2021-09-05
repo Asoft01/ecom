@@ -71,7 +71,7 @@
                             </td>
                             <td>
                                 @if($admin->type != "superadmin")
-                                    <a title="Set Roles/Permission" href="{{ url('admin/update-roles/'.$admin->id) }}"><i class="fas fa-unlock"></i></a>
+                                    <a title="Set Roles/Permission" href="{{ url('admin/update-role/'.$admin->id) }}"><i class="fas fa-unlock"></i></a>
                                     &nbsp; &nbsp;
                                     <a title="Edit Admin/Sub-Admin" href="{{ url('admin/add-edit-admin-subadmin/'.$admin->id) }}"><i class="fas fa-edit"></i></a>
                                     &nbsp; &nbsp;

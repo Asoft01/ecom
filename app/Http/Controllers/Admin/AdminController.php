@@ -8,6 +8,7 @@ use Hash;
 use Auth;
 use Session;
 use App\Admin;
+use App\AdminsRole;
 use Image;
 
 class AdminController extends Controller
@@ -271,5 +272,49 @@ class AdminController extends Controller
 
         // dd($admindata); die;
         return view('admin.admins_subadmins.add_edit_admin_subadmin')->with(compact('title', 'admindata'));
+    }
+
+    public function updateRole(Request $request, $id){
+        // echo $id; die;
+        // $adminid = $id;
+
+        if($request ->isMethod('post')){
+            $data = $request->all();
+            unset($data['_token']);
+            // echo "<pre>"; print_r($data); die;
+
+            foreach($data as $key => $value){
+                // echo "<pre>"; print_r($key); die; 
+                // echo "<pre>"; print_r($value); die; 
+
+                AdminRole::where('admin_id', $id)->delete();
+                if(isset($value['view'])){
+                    $view = $value['view'];
+                }else{
+                    $view = 0;
+                }
+
+                if(isset($value['edit'])){
+                    $edit = $value['edit'];
+                }else{
+                    $edit = 0;
+                }
+
+                if(isset($value['full'])){
+                    $full = $value['full'];
+                }else{
+                    $full = 0;
+                }
+
+                AdminsRole::where('admin_id', $id)->insert(['admin_id' => $id, 'module'=> $key, 'view_access' => $view, 'edit_access'=> $edit, 'full_access' => $full]);
+            }
+
+            $message = "Roles Updated Successfully";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+        }
+        $adminDetails = Admin::where('id', $id)->first()->toArray();
+        $title = "Update " .$adminDetails['name']." (".$adminDetails['type'].") .Roles / Permissions";
+        return view('admin.admins_subadmins.update_roles')->with(compact('title', 'adminDetails'));
     }
 }
