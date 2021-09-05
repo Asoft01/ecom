@@ -36,7 +36,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Admins / Sub-Admins</h3>
-                <a href="{{ url('admin/add-edit-subadmin') }}" style="max-width: 250px; float:right; display: inline-block;" class="btn btn-block btn-success"> Add Admin / Sub Admins</a>
+                <a href="{{ url('admin/add-edit-admin-subadmin') }}" style="max-width: 250px; float:right; display: inline-block;" class="btn btn-block btn-success"> Add Admin / Sub Admins</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

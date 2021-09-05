@@ -156,6 +156,7 @@ class AdminController extends Controller
             Session::flash('error_message', 'This feature is resricted');
             return redirect('admin/dashboard');
         }
+
         Session::put('page', 'admins_subadmins');
         $admins_subadmins = Admin::get();
         return view('admin.admins_subadmins.admins_subadmins')->with(compact('admins_subadmins'));
@@ -182,5 +183,93 @@ class AdminController extends Controller
         $message = "Admin/Sub-Admin has been deleted Successfully";
         Session::flash('success_message',$message);
         return redirect()->back();
+    }
+
+    public function addEditAdminSubAdmin(Request $request, $id= null){
+        // echo "test"; die;
+        if($id == null){
+            // Add Admin/Sub-Admin
+            $title = "Add Admin/Sub-Admin";
+            $admindata = new Admin;
+            $message = "Admin/Sub-Admin added Successfully";
+
+        }else{
+            $title = "Edit Admin/Sub-Admin";
+            $admindata = Admin::find($id);
+            
+            // $admindata = json_decode(json_encode($admindata), true);
+            $message = "Admin/Sub-Admin Added Successfully";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            if($id == ""){
+                $adminCount = Admin::where('email', $data['admin_email'])->count();
+                if($adminCount > 0 ){
+                    Session::flash('error_message', 'Admin/Sub-Admin already exists!');
+                    return redirect('admin/admins-subadmins');
+                }
+            }
+            $rules = [
+                'admin_name'=> 'required|regex:/^[\pL\s-]+$/u',
+                'admin_mobile' => 'required|numeric',
+                'admin_image'=> 'image'
+            ];
+            $customMessages = [
+                'admin_name.required' => 'Name is required',
+                'admin_name.alpha' => 'Valid Name is required',
+                'admin_mobile.required' => 'Mobile is required',
+                'admin_mobile.numeric' => 'Valid Mobile is requird',
+                'admin_image.image' => 'Valid Image is required'
+            ];
+            
+            $this->validate($request, $rules, $customMessages);
+
+            //Upload image
+            if($request->hasFile('admin_image')){
+                $image_tmp = $request->file('admin_image');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imageName = rand(111, 99999). '.'. $extension;
+                    $imagePath = 'images/admin_images/admin_photos/'.$imageName;
+                    
+                    // Upload the image 
+                    // Image::make($image_tmp)->save($imagePath);
+
+                    // Resize Image 
+                    Image::make($image_tmp)->resize(300, 400)->save($imagePath);
+                }else if(!empty($data['current_admin_image'])){
+                    $imageName = $data['current_admin_image'];
+                }else{
+                    $imageName= "";
+                }
+                // echo "<pre>"; print_r($imageName); die;
+                $admindata->image = $imageName;
+                $admindata->name =  $data['admin_name'];
+                $admindata->mobile = $data['admin_mobile'];
+
+                if($id == ""){
+                    $admindata->email = $data['admin_email'];
+                    $admindata->type = $data['admin_type'];
+                }
+
+                if($data['admin_password'] != ""){
+                    $admindata->password = bcrypt($data['admin_password']);
+                }
+
+                $admindata->save();
+                session::flash('success_message', $message);
+                return redirect('admin/admins-subadmins');
+            }else{
+                session::flash('error_message', "Please select a file");
+            }
+        }
+
+        // dd($admindata); die;
+        return view('admin.admins_subadmins.add_edit_admin_subadmin')->with(compact('title', 'admindata'));
     }
 }

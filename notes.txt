@@ -135,6 +135,13 @@ php artisan db:seed
 
 composer dump-autoload
 
+https://www.xml-sitemaps.com/details-stackdevelopers.in-49b47ae7b.html
+
+http://tools.seobook.com/robots-txt/generator/
+
+https://www.seoptimer.com/robots-txt-generator
+
+
 
 
 Username:stackdevelopers
