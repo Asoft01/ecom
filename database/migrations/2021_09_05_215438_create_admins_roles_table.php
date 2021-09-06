@@ -16,7 +16,7 @@ class CreateAdminsRolesTable extends Migration
         Schema::create('admins_roles', function (Blueprint $table) {
             $table->id();
             $table->integer('admin_id');
-            $table->string('modules');
+            $table->string('module');
             $table->tinyInteger('view_access');
             $table->tinyInteger('edit_access');
             $table->tinyInteger('full_access');

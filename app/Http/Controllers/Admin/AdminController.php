@@ -283,11 +283,10 @@ class AdminController extends Controller
             unset($data['_token']);
             // echo "<pre>"; print_r($data); die;
 
+            AdminsRole::where('admin_id', $id)->delete();
             foreach($data as $key => $value){
                 // echo "<pre>"; print_r($key); die; 
                 // echo "<pre>"; print_r($value); die; 
-
-                AdminRole::where('admin_id', $id)->delete();
                 if(isset($value['view'])){
                     $view = $value['view'];
                 }else{
