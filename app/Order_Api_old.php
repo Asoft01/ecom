@@ -98,7 +98,7 @@ class Order extends Model
         // Converting the result to array
         $result = json_decode($result, true);
 
-        print_r($result); die;
+        // print_r($result); die;
 
         if(isset($result['status_code']) && $result['status_code'] == 1){
             // Update Orders Table Column is pushed to 1

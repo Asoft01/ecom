@@ -120,6 +120,8 @@ COMPOSER_MEMORY_LIMIT = -1 composer require softon/indipay
 Then run
 php artisan vendor:publish --provider="Softon\Indipay\IndipayServiceProvider"
 
+vendor\softon\indipay\src\Gateways\PayUMoneyGateway.php
+
 v 165 17:57 needs to be done cos it also touch aspect of payumoney
 
 v 166
@@ -165,3 +167,7 @@ Full Access - View, Edit or Delete
             View    Edit    Full
 Categories   1        0      0
 Products -   1        1      1
+
+git create
+git remote -v
+git push heroku main
