@@ -275,6 +275,7 @@ class AdminController extends Controller
     }
 
     public function updateRole(Request $request, $id){
+        Session::put('page', 'admins_subadmins');
         // echo $id; die;
         // $adminid = $id;
 
@@ -313,7 +314,8 @@ class AdminController extends Controller
             return redirect()->back();
         }
         $adminDetails = Admin::where('id', $id)->first()->toArray();
+        $adminRoles = AdminsRole::where('admin_id', $id)->get()->toArray();
         $title = "Update " .$adminDetails['name']." (".$adminDetails['type'].") .Roles / Permissions";
-        return view('admin.admins_subadmins.update_roles')->with(compact('title', 'adminDetails'));
+        return view('admin.admins_subadmins.update_roles')->with(compact('title', 'adminDetails', 'adminRoles'));
     }
 }
