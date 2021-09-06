@@ -136,19 +136,21 @@ Route::namespace('Front')->group(function(){
     // $catUrls = array_flatten($catUrls);
     // echo "<pre>"; print_r($catUrls); die;
 
-    $catUrls = Category::caturl();
-    foreach ($catUrls as $url) {
-        Route::get('/'.$url, 'ProductsController@listing');
-    }
+    // $catUrls = Category::caturl();
+    // foreach ($catUrls as $url) {
+        // Route::get('/'.$url, 'ProductsController@listing');
+        Route::get('/casual-t-shirts', 'ProductsController@listing');
+    // }
     // Route::get('/contact-us', function(){
     //     echo "test";die;
     // });
 
     // CMS Routes
-    $cmsUrls = CmsPage::cmsUrls();
-    foreach ($cmsUrls as $url){
-        Route::get('/'.$url, 'CmsController@cmsPage');
-    }
+    // $cmsUrls = CmsPage::cmsUrls();
+    // foreach ($cmsUrls as $url){
+        // Route::get('/'.$url, 'CmsController@cmsPage');
+        // Route::get('/'.$url, 'CmsController@cmsPage');
+    // }
 
     // Product Detail Route
     Route::get('/product/{id}', 'ProductsController@detail');
