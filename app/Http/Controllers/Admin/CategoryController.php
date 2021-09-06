@@ -184,4 +184,5 @@ class CategoryController extends Controller
         session::flash('success_message', $message);
         return redirect()->back();
     }
+    
 }
