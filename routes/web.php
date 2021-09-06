@@ -17,6 +17,7 @@
 
 use App\Category;
 use App\CmsPage;
+use Illuminate\Support\Facades\Route;
 
 // Auth::routes();
 
@@ -128,22 +129,22 @@ Route::namespace('Front')->group(function(){
     //Get Category URLs
     // $catUrls = Category::select('url', 'status')->where('status', 1)->get()->toArray();
     // $catUrls = Category::select('url')->where('status', 1)->get()->toArray();
-    $catUrls = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
+    // $catUrls = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
     // $catUrls= json_decode(json_encode($catUrls));
     // $catUrls = array_flatten($catUrls);
     // echo "<pre>"; print_r($catUrls); die;
-    foreach ($catUrls as $url) {
-        Route::get('/'.$url, 'ProductsController@listing');
-    }
+    // foreach ($catUrls as $url) {
+    //     Route::get('/'.$url, 'ProductsController@listing');
+    // }
     // Route::get('/contact-us', function(){
     //     echo "test";die;
     // });
 
     // CMS Routes
-    $cmsUrls = CmsPage::select('url')->where('status', 1)->get()->pluck('url')->toArray();
-    foreach ($cmsUrls as $url){
-        Route::get('/'.$url, 'CmsController@cmsPage');
-    }
+    // $cmsUrls = CmsPage::select('url')->where('status', 1)->get()->pluck('url')->toArray();
+    // foreach ($cmsUrls as $url){
+    //     Route::get('/'.$url, 'CmsController@cmsPage');
+    // }
 
     // Product Detail Route
     Route::get('/product/{id}', 'ProductsController@detail');
