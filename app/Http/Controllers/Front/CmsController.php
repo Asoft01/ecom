@@ -79,4 +79,5 @@ class CmsController extends Controller
         }
         return view('front.pages.contact');
     }
+    
 }

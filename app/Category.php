@@ -50,4 +50,9 @@ class Category extends Model
         // dd($catIds); die;
         return array('catIds'=> $catIds, 'catDetails'=>$catDetails, 'breadcrumbs'=>$breadcrumbs);
     }
+
+    public static function caturl(){
+        $catUrls = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
+        return $catUrls;
+    }
 }
