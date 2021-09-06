@@ -1,12 +1,20 @@
 <?php 
     use App\Section;
+	use Illuminate\Support\Facades\Auth;
     $sections = Section::sections();
     // echo "<pre>"; print_r($sections); die;
 ?>
 <div id="header">
 	<div class="container">
 		<div id="welcomeLine" class="row">
-			<div class="span6">Welcome!<strong> User</strong></div>
+			<div class="span6">
+				<strong>
+				<?php 
+					if(Auth::check()){
+						$user = auth()->user(); echo"Welome! " .($user->name);
+					} 
+				?> 
+			 </strong></div>
 			<div class="span6">
 				<div class="pull-right">
 					<a href="{{ url('cart') }}"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ <span class="totalCartItems"> {{ totalCartItems() }} </span> ] Items in your cart </span> </a>
@@ -23,7 +31,7 @@
 		          <span class="icon-bar"></span>
 		          <span class="icon-bar"></span>
 		        </a>
-		        <a class="brand" href="#">Stack Developers</a>
+		        <a class="brand" href="#">E-commerce</a>
 		        <div class="nav-collapse">
 		          <ul class="nav">
                     <li class="active"><a href="#">Home</a></li>
