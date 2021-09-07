@@ -1,6 +1,8 @@
 <?php
 
+namespace Database\Seeders;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 
 class AdminsTableSeeder extends Seeder
@@ -32,6 +34,7 @@ class AdminsTableSeeder extends Seeder
             ],
             
         ];
+        
         DB::table('admins')->insert($adminRecords);
         
         // For inserting one admin records
