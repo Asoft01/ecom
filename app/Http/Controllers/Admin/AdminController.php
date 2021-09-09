@@ -305,7 +305,7 @@ class AdminController extends Controller
                 }else{
                     $full = 0;
                 }
-
+                
                 AdminsRole::where('admin_id', $id)->insert(['admin_id' => $id, 'module'=> $key, 'view_access' => $view, 'edit_access'=> $edit, 'full_access' => $full]);
             }
 
@@ -315,7 +315,8 @@ class AdminController extends Controller
         }
         $adminDetails = Admin::where('id', $id)->first()->toArray();
         $adminRoles = AdminsRole::where('admin_id', $id)->get()->toArray();
-        $title = "Update " .$adminDetails['name']." (".$adminDetails['type'].") .Roles / Permissions";
+        $title = "Update " .$adminDetails['name']." (".$adminDetails['type'].") Roles / Permissions";
         return view('admin.admins_subadmins.update_roles')->with(compact('title', 'adminDetails', 'adminRoles'));
+        
     }
 }

@@ -151,7 +151,7 @@ Route::namespace('Front')->group(function(){
     ///////////////////////// Default Method ///////////////////////////////////
     
     // Route::get('/casual-t-shirts', 'ProductsController@listing');
-    // Route::get('/about', 'CmsController@cmsPage');
+    // Route::get('/about', 'CmsController@cmsPage'); 
 
     //////////////////////////////////////////////////////////////////////////////
 
@@ -162,7 +162,9 @@ Route::namespace('Front')->group(function(){
     // CMS Routes
     $cmsUrls = CmsPage::select('url')->where('status', 1)->get()->pluck('url')->toArray();
 
-    foreach ($cmsUrls a x
+    foreach ($cmsUrls as $url){
+        Route::get('/'.$url, 'CmsController@cmsPage');
+    }
 
     // $cmsUrls = CmsPage::cmsUrls();
     // foreach ($cmsUrls as $url){

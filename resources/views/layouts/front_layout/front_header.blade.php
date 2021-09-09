@@ -63,7 +63,7 @@
 					<li class="divider-vertical"></li>
 					@if(Auth::check())
 						<li><a href="{{ url('account') }}">My Account</a></li>
-						{{-- <li><a href="{{ url('logout') }}">Logout</a></li> --}}
+						<li><a href="{{ url('logout') }}">Logout</a></li>
 					@else
 						<li><a href="{{ url('login-register') }}">Login / Register</a></li>
 					@endif

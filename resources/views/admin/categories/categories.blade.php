@@ -66,17 +66,23 @@
                             <td>{{ $category->section->name }}</td>
                             <td>{{ $category->url }}</td>
                             <td>
+                              @if($categoryModule['edit_access'] == 1 || $categoryModule['full_access'] == 1)
                                 @if($category->status ==1)
                                    <a class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}" href="javascript:void(0)"> <i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i> </a>
                                 @else 
                                 <a class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}" href="javascript:void(0)"> <i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i> </a>
                                 @endif
+                              @endif
                             </td>
                             <td>
+                              @if($categoryModule['edit_access'] == 1 || $categoryModule['full_access'] == 1)
                                 <a href="{{ url('admin/add-edit-category/'.$category->id) }}"><i class="fas fa-edit"></i></a>
                                 &nbsp; &nbsp;
+                              @endif
+                              @if($categoryModule['full_access']== 1)
                                 {{-- <a class="confirmDelete" name="Category" href="{{ url('admin/delete-category/'.$category->id) }}">Delete</a> --}}
                                 <a href="javascript:void(0)" class="confirmDelete" record="category" recordid="{{ $category->id }}"><i class="fas fa-trash"></i></a>
+                              @endif
                             </td>
                         </tr>
                     @endforeach

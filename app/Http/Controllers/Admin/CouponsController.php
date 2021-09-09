@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\AdminsRole;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Coupon;
 use App\Section;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 class CouponsController extends Controller
@@ -18,7 +20,17 @@ class CouponsController extends Controller
         // echo "<pre>"; print_r($coupons); die;
 
         // dd($coupons); die;
-        return view('admin.coupons.coupons')->with(compact('coupons'));
+
+        $couponModuleCount = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'coupons'])->count();
+        if($couponModuleCount == 0){
+            $message = "This feature is restricted for you!";
+            session::flash('error_message', $message);
+            return redirect('admin/dashboard');
+        }else{
+            $couponModule = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'coupons'])->first()->toArray();
+            // dd($couponModule); die;
+        }
+        return view('admin.coupons.coupons')->with(compact('coupons', 'couponModule'));
     }
 
     public function updateCouponStatus(Request $request){

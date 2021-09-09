@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\AdminsRole;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
@@ -10,6 +11,7 @@ use App\Brand;
 use App\Category;
 use App\ProductsAttribute;
 use App\ProductsImage;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Image;
 
@@ -28,7 +30,17 @@ class ProductsController extends Controller
         // echo "<pre>"; print_r($products); die;
         // return response()->json(['products'=> $products]);
         // echo "<pre>"; print_r($products); die;
-        return view('admin.products.products')->with(compact('products'));
+
+        $productModuleCount = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'products'])->count();
+        if($productModuleCount == 0){
+            $message = "This feature is restricted for you!";
+            session::flash('error_message', $message);
+            return redirect('admin/dashboard');
+        }else{
+            $productModule = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'products'])->first()->toArray();
+            // dd($productModule); die;
+        }
+        return view('admin.products.products')->with(compact('products', 'productModule'));
     }
 
     public function updateProductStatus(Request $request){
