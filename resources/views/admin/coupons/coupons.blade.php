@@ -69,17 +69,18 @@
                                 {{ $coupon['expiry_date'] }}
                             </td>
                             <td>
-                                @if($couponModule['edit_access'] == 1 && $couponModule['full_access'] == 1)
+                                @if($couponModule['edit_access'] == 1 || $couponModule['full_access'] == 1)
                                   <a title="Edit Coupon" href="{{ url('admin/add-edit-coupon/'.$coupon['id']) }}"><i class="fas fa-edit"></i></a>
                                   &nbsp; &nbsp;
                                   
                                 @endif
+
                                 @if($couponModule['full_access'] == 1)
                                   <a title="Delete Coupon" href="javascript:void(0)" class="confirmDelete" record="coupon" recordid="{{ $coupon['id'] }}"><i class="fas fa-trash" style="color:red"></i></a>
                                   &nbsp; &nbsp;
                                 @endif
-                                
-                                @if($couponModule['edit_access'] == 1 && $couponModule['full_access'])
+
+                                @if($couponModule['edit_access'] == 1 || $couponModule['full_access'])
                                   @if($coupon['status'] ==1)
                                     <a class="updateCouponStatus" id="coupon-{{ $coupon['id'] }}" coupon_id="{{ $coupon['id'] }}" href="javascript:void(0)"> <i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i> </a>
                                   @else 

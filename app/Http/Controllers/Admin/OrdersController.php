@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\AdminsRole;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use App\User;
 use App\Sms;
 use App\OrderStatus;
 use Dompdf\Dompdf;
-
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
@@ -22,7 +23,17 @@ class OrdersController extends Controller
         $orders = Order::with('orders_products')->orderBy('id', 'Desc')->get()->toArray();
         // $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
         // dd($orders);
-        return view('admin.orders.orders')->with(compact('orders'));
+
+        $orderModuleCount = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'orders'])->count();
+        if($orderModuleCount == 0){
+            $message = "This feature is restricted for you!";
+            session::flash('error_message', $message);
+            return redirect('admin/dashboard');
+        }else{
+            $orderModule = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'orders'])->first()->toArray();
+            // dd($orderModule); die;
+        }
+        return view('admin.orders.orders')->with(compact('orders', 'orderModule'));
     }
 
     public function orderDetails($id){

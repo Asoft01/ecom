@@ -71,12 +71,14 @@
                             <td>{{ $order['payment_method'] }}</td>
                             
                             <td style="width:120px;">
+                              @if($orderModule['edit_access'] == 1 || $orderModule['full_access'] == 1)
                                 <a title="View Order Details" href="{{ url('admin/orders/'.$order['id']) }}"><i class="fas fa-file"></i></a>&nbsp;&nbsp;
                                 @if($order['order_status']== "Shipped" || $order['order_status'] == "Delivered")
                                   <a title="View Order Invoice" target="_blank" href="{{ url('admin/view-order-invoice/'.$order['id']) }}"><i class="fas fa-print"></i></a>
                                   &nbsp;&nbsp;
                                   <a title="Print PDF Invoice" target="_blank" href="{{ url('admin/print-pdf-invoice/'.$order['id']) }}"><i class="fas fa-file-pdf"></i></a>
                                 @endif
+                              @endif
                             </td>
                         </tr>
                     @endforeach
