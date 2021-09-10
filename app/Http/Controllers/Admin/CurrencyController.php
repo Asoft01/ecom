@@ -29,4 +29,53 @@ class CurrencyController extends Controller
             return response()->json(['status'=>$status, 'currency_id'=> $data['currency_id']]);
         }
     }
+
+    public function addEditCurrency(Request $request, $id = null){
+        if($id == ""){
+            $title = "Add Currency";
+            $currency = new Currency;
+            $message = "Currency Added Successfully!";
+        }else{
+            $title = "Edit Currency";
+            $currency = Currency::find($id);
+            $message = "Currency Updated Successfully";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            // Currency Validations
+            $rules = [
+                'currency_code'=> 'required|regex:/^[\pL\s-]+$/u',
+                'exchange_rate'=> 'required|integer',
+               
+            ];
+            $customMessages = [
+                'currency_code.required' => 'Currency Code is required',
+                'currency_code.regex' => 'Valid Currency Code is required',
+                'exchange_rate.required' => 'Exchange Rate is required',
+                'exchange_rate.regex' => 'Valid Exchanege Rate is required',
+            ];
+            
+            $this->validate($request, $rules, $customMessages);
+
+            $currency->currency_code = $data['currency_code'];
+            $currency->exchange_rate = $data['exchange_rate'];
+            $currency->save();
+
+            Session::flash('success_message', $message);
+            return redirect('admin/currencies');
+        }
+
+        return view('admin.currencies.add_edit_currency')->with(compact('title', 'currency'));
+    }
+
+    public function deleteCurrency($id){
+        // Delete Category
+        Currency::where('id', $id)->delete();
+        $message = 'Currency been deleted successfully';
+        session::flash('success_message', $message);
+        return redirect()->back();
+    }
 }

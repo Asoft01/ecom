@@ -47,7 +47,7 @@ class BrandController extends Controller
             // echo "<pre>"; print_r($data); die;
 
               // Brand Validations
-              $rules = [
+            $rules = [
                 'brand_name'=> 'required|regex:/^[\pL\s-]+$/u',
                
             ];

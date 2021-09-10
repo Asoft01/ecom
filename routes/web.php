@@ -118,6 +118,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         // Curremcies
         Route::get('currencies', 'CurrencyController@currencies');
         Route::post('update-currency-status', 'CurrencyController@updateCurrencyStatus');
+        Route::match(['get', 'post'], 'add-edit-currency/{id?}', 'CurrencyController@addEditCurrency');
+        Route::get('delete-currency/{id}', 'CurrencyController@deleteCurrency');
 
     });
     
