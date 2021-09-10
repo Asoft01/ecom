@@ -132,6 +132,36 @@ $(document).ready(function(){
             })
         });
 
+        // Update Currency Status
+    // $(".updateAdminStatus").click(function(){
+        $(document).on('click', '.updateCurrencyStatus', function(){
+            // var status = $(this).text();
+            var status = $(this).children("i").attr("status");
+            // alert(status); return false;
+            var currency_id= $(this).attr('currency_id');
+            // alert(status);
+            // alert(currency_id);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-currency-status',
+                data: {status:status, currency_id: currency_id},
+                success: function(resp){
+                    // alert(resp['status']);
+                    // alert(resp['section_id']);
+                    if(resp['status']== 0){
+                        $("#currency-"+currency_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'>");
+                    }else if(resp['status']== 1){
+                        $("#currency-"+currency_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'>");
+                    }
+                }, error: function(){
+                    alert("Error");
+                }
+            })
+        });
+
        // Update CMS Status
     // $(".updateBrandStatus").click(function(){
         $(document).on('click', '.updateCmsPageStatus', function(){

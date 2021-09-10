@@ -119,6 +119,9 @@
             <ul id="productDetail" class="nav nav-tabs">
                 <li class="active"><a href="#home" data-toggle="tab">Product Details</a></li>
                 <li><a href="#profile" data-toggle="tab">Related Products</a></li>
+                @if(isset($productDetails['product_video']) && !empty($productDetails['product_video']))
+                    <li><a href="#video" data-toggle="tab">Product Video</a></li>
+                @endif
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active in" id="home">
@@ -240,6 +243,14 @@
                     </div>
                     <br class="clr">
                 </div>
+
+                @if(isset($productDetails['product_video']) && !empty($productDetails['product_video']))
+                    <div class="tab-pane fade" id="video">
+                        <video controls="" width="640" height="480">
+                            <source src="{{ url('videos/product_videos/'.$productDetails['product_video']) }}" type="video/mp4"/>
+                        </video>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

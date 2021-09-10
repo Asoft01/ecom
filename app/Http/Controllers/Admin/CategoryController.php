@@ -26,7 +26,12 @@ class CategoryController extends Controller
 
         // Set Admin/Sub Admin Permission for Categories
         $categoryModuleCount = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'categories'])->count();
-        if($categoryModuleCount == 0){
+       
+       if(Auth::guard('admin')->user()->type== "superadmin"){
+            $categoryModule['view_access'] = 1;
+            $categoryModule['edit_access'] = 1;
+            $categoryModule['full_access'] = 1;
+       }elseif($categoryModuleCount == 0){
             $message = "This feature is restricted for you!";
             session::flash('error_message', $message);
             return redirect('admin/dashboard');

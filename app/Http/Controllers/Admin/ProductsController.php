@@ -32,13 +32,20 @@ class ProductsController extends Controller
         // echo "<pre>"; print_r($products); die;
 
         $productModuleCount = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'products'])->count();
-        if($productModuleCount == 0){
+        if(Auth::guard('admin')->user()->type=="superadmin"){
+            
+            $productModule['view_access']= 1;
+            $productModule['edit_access']= 1;
+            $productModule['full_access']= 1;
+
+            // dd($productModule); die;
+        }elseif($productModuleCount == 0){
             $message = "This feature is restricted for you!";
             session::flash('error_message', $message);
             return redirect('admin/dashboard');
         }else{
             $productModule = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'products'])->first()->toArray();
-            // dd($productModule); die;
+            dd($productModule); die;
         }
         return view('admin.products.products')->with(compact('products', 'productModule'));
     }

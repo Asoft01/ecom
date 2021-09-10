@@ -25,7 +25,11 @@ class OrdersController extends Controller
         // dd($orders);
 
         $orderModuleCount = AdminsRole::where(['admin_id' => Auth::guard('admin')->user()->id, 'module' => 'orders'])->count();
-        if($orderModuleCount == 0){
+        if(Auth::guard('admin')->user()->type== "superadmin"){
+            $orderModule['view_access'] = 1;
+            $orderModule['edit_access'] = 1;
+            $orderModule['full_access'] = 1;
+       }elseif($orderModuleCount == 0){
             $message = "This feature is restricted for you!";
             session::flash('error_message', $message);
             return redirect('admin/dashboard');
