@@ -20,6 +20,7 @@ use App\DeliveryAddress;
 use App\Country;
 use App\Order;
 use App\OrdersProduct;
+use App\Currency;
 use DB;
 use App\Sms;
 use App\ShippingCharge;
@@ -219,10 +220,14 @@ class ProductsController extends Controller
             // dd($groupProducts); die;
         }
         
+        ////////////Get Currencies ///////////
+        $getCurrencies = Currency::select('currency_code', 'exchange_rate')->where('status', 1)->get()->toArray();
+        // dd($getCurrencies); die;
+
         $meta_title =       $productDetails['product_name'];
         $meta_description = $productDetails['description'];
         $meta_keywords =    $productDetails['product_name'];
-        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords'));
+        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords', 'getCurrencies'));
     }
 
     // First Way of getting the prices based on the attribute price in ajax request
@@ -243,6 +248,16 @@ class ProductsController extends Controller
             // echo "<pre>"; print_r($data); die;
 
             $getDiscountedAttrPrice = Product::getDiscountedAttrPrice($data['product_id'], $data['size']);
+            
+            $getCurrencies= Currency::select('currency_code', 'exchange_rate')->where('status', 1)->get()->toArray();
+            $getDiscountedAttrPrice['currency']= "<span style='font-weight: normal !important; font-size: 14px' !important>";
+            foreach($getCurrencies as $currency){
+                $getDiscountedAttrPrice['currency'] .= "<br>";
+                $getDiscountedAttrPrice['currency'] .= $currency['currency_code']." ";
+                $getDiscountedAttrPrice['currency'] .= round($getDiscountedAttrPrice['final_price']/ $currency['exchange_rate'], 2);
+            }
+            $getDiscountedAttrPrice['currency'] .="</span>";
+
             return $getDiscountedAttrPrice;
         }
     }

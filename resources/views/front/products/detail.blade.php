@@ -81,12 +81,20 @@
                 <div class="control-group">
                     <?php $discounted_price= Product::getDiscountedPrice($productDetails['id']); ?>
                     <h4 class="getAttrPrice">
+
                         @if($discounted_price> 0)
                             <del>Rs.{{ $productDetails['product_price'] }} </del> Rs. {{ $discounted_price }}
                         @else
                             Rs.{{ $productDetails['product_price'] }}
                         @endif
+                        
                     </h4>
+                    <span class="mainCurrencyPrices">
+                        @foreach ($getCurrencies as $currency)
+                            {{ $currency['currency_code'] }}
+                            <?php echo round($productDetails['product_price']/ $currency['exchange_rate'], 2); ?><br>
+                        @endforeach
+                    </span>
                         <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="span2 pull-left">
                             <option value="">Select Size</option>
                             @foreach ($productDetails['attributes'] as $attribute)

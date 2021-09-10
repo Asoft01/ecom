@@ -171,6 +171,7 @@ $(document).ready(function(){
             data: {size: size, product_id: product_id},
             type: 'post',
             success: function(resp){
+                $(".mainCurrencyPrices").hide();
                 // alert(resp['product_price']); return false;
                 // alert(resp['product_price']);
                 // alert(resp['discounted_price']);
@@ -178,9 +179,9 @@ $(document).ready(function(){
                 // if(resp['discounted_price'] > 0){
                 if(resp['discount'] > 0){
                     // $(".getAttrPrice").html("<del>Rs. "+resp['product_price'] + "</del> Rs."+resp['discounted_price']);
-                    $(".getAttrPrice").html("<del>Rs. "+resp['product_price'] + "</del> Rs."+resp['final_price']);
+                    $(".getAttrPrice").html("<del>Rs. "+resp['product_price'] + "</del> Rs."+resp['final_price'] + resp['currency']);
                 }else{
-                    $(".getAttrPrice").html("Rs. "+resp['product_price']);
+                    $(".getAttrPrice").html("Rs. "+resp['product_price'] + resp['currency']);
                 }
                 // $(".getAttrPrice").html("Rs. "+resp)
             }, error: function(){
