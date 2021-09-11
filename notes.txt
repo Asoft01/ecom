@@ -176,3 +176,6 @@ git push heroku main
 php artisan make:migration create_currencies_table
 php artisan make:model Currency
 php artisan make:seeder CurrenciesTableSeeder
+
+
+https://codepen.io/hesguru/pen/BaybqXv

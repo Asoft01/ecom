@@ -121,6 +121,10 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::match(['get', 'post'], 'add-edit-currency/{id?}', 'CurrencyController@addEditCurrency');
         Route::get('delete-currency/{id}', 'CurrencyController@deleteCurrency');
 
+        // Ratings
+
+        Route::get('ratings', 'RatingsController@ratings');
+        Route::post('update-rating-status', 'RatingsController@updateRatingStatus');
     });
     
 });
@@ -229,6 +233,9 @@ Route::namespace('Front')->group(function(){
 
     // Contact Route Page 
     Route::match(['GET', 'POST'], '/contact', 'CmsController@contact');
+
+    // Add Rating Review 
+    Route::match(['GET', 'POST'], '/add-rating', 'RatingsController@addRating');
     
     Route::group(['middleware'=>['auth']], function(){
 

@@ -130,6 +130,7 @@
                 @if(isset($productDetails['product_video']) && !empty($productDetails['product_video']))
                     <li><a href="#video" data-toggle="tab">Product Video</a></li>
                 @endif
+                <li><a href="#reviews" data-toggle="tab">Product Reviews</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active in" id="home">
@@ -259,6 +260,43 @@
                         </video>
                     </div>
                 @endif
+                
+                <div class="tab-pane fade" id="reviews">
+                    <div class="row">
+                        <div class="span4">
+                            <h3>Write a review</h3>
+                            <form action="{{ url('/add-rating') }}" name="ratingForm" id="ratingForm" method="post" class="form-horizontal">@csrf
+                                <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+                                <div class="rate">
+                                    <input type="radio" id="star5" name="rating" value="5" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rating" value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rating" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rating" value="2" />
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rating" value="1" />
+                                    <label for="star1" title="text">1 star</label>
+                                  </div>
+
+                                  <div class="control-group"></div>
+                                  <div class="form-group">
+                                    <label for="">Your Review</label>
+                                    <textarea name="review" style="width:300px; height: 50px;"></textarea>
+                                  </div>
+
+                                  <div>&nbsp;</div>
+                                  <div class="form-group">
+                                        <input type="submit" class="btn btn-large" name="Submit">
+                                  </div>
+                            </form>
+                        </div>
+                        <div class="span4">
+                            <h3>Users Reviews</h3>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

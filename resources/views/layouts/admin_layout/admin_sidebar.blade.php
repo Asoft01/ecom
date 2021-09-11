@@ -70,6 +70,23 @@
               @else
                 <?php $active = ""; ?>
               @endif
+
+              
+
+            @if(Auth::guard('admin')->user()->type == "superadmin" || Auth::guard('admin')->user()->type=="admin")
+            <!-- Admins / SubAdmins -->
+            @if(Session::get('page')=="admins_subadmins")
+              <?php $active= "active"; ?>
+            @else
+              <?php $active = ""; ?>
+            @endif
+              <li class="nav-item">
+                <a href="{{ url('admin/admins-subadmins') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Admins / Sub Admins </p>
+                </a>
+              </li>
+            @endif
               <li class="nav-item">
                 <a href="{{ url('admin/update-admin-details') }}" class="nav-link {{ $active }}">
                   <i class="far fa-circle nav-icon"></i>
@@ -236,24 +253,19 @@
                 <p>Currencies</p>
               </a>
             </li>
-            
 
-            @if(Auth::guard('admin')->user()->type == "superadmin" || Auth::guard('admin')->user()->type=="admin")
-              <!-- Admins / SubAdmins -->
-              @if(Session::get('page')=="admins_subadmins")
+            @if(Session::get('page')=="ratings")
                 <?php $active= "active"; ?>
               @else
                 <?php $active = ""; ?>
               @endif
               <li class="nav-item">
-                <a href="{{ url('admin/admins-subadmins') }}" class="nav-link {{ $active }}">
+                <a href="{{ url('admin/ratings') }}" class="nav-link {{ $active }}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Admins / Sub Admins </p>
+                  <p>Ratings</p>
                 </a>
               </li>
-            @endif
-              <!-- Coupons Ends here -->
-
+              
             </ul>
           </li>
           

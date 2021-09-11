@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="{{ secure_asset('css/front_css/base.css') }}" media="screen">
         <link rel="stylesheet" href="{{ secure_asset('css/front_css/front-responsive.min.css') }}">
         <link rel="stylesheet" href="{{ secure_asset('css/front_css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('css/front_css/style.css') }}">
         <link rel="stylesheet" href="{{ secure_asset('js/front_js/js/google-code-prettify/prettify.css') }}">
         <link rel="shortcut icon" href="{{ secure_asset('images/front_images/ico/favicon.ico') }}">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ secure_asset('images/front_images/ico/apple-touch-icon-144-precomposed.png') }}">
@@ -42,6 +43,7 @@
 		<!-- Front style responsive -->
 		<link href="{{ url('css/front_css/front-responsive.min.css') }}" rel="stylesheet"/>
 		<link href="{{ url('css/front_css/font-awesome.css') }}" rel="stylesheet" type="text/css">
+		<link href="{{ url('css/front_css/style.css') }}" rel="stylesheet" type="text/css">
 		<!-- Google-code-prettify -->
 		<link href="{{ url('js/front_js/js/google-code-prettify/prettify.css') }}" rel="stylesheet"/>
 		<!-- fav and touch icons -->
