@@ -59,6 +59,15 @@
             
             <h3> {{ $productDetails['product_name'] }}  </h3>
             <small>- {{ $productDetails['brand']['name'] }}</small>
+            
+            <div>&nbsp;</div>
+            <div>
+                <?php
+                    $star = 1;
+                    while($star <= $avgStarRating) { ?>
+                    <span>&#9733;</span>
+                    <?php $star++; } ?>({{ $avgRating  }})
+            </div>
             <hr class="soft"/>
 
             @if(count($groupProducts)> 0)
@@ -294,6 +303,22 @@
                         </div>
                         <div class="span4">
                             <h3>Users Reviews</h3>
+                            @if(count($ratings)> 0)
+                                @foreach ($ratings as $rating)
+                                    <div>
+                                        <?php 
+                                            $count = 1;
+                                            while ($count <= $rating['rating']){ ?>
+                                            <span>&#9733;</span>
+                                        <?php $count++; } ?>
+                                        <p>{{ $rating['review'] }}</p>
+                                        <p> By {{ $rating['user']['name'] }} </p>
+                                        <p>{{ date("d-m-Y H:i:s", strtotime($rating['created_at'])); }}</p>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p><b>Reviews are not available for this product!</b></p>
+                            @endif
                         </div>
                     </div>
                 </div>

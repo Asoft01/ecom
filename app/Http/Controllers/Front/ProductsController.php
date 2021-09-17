@@ -24,6 +24,7 @@ use App\Currency;
 use DB;
 use App\Sms;
 use App\ShippingCharge;
+use App\Rating;
 
 class ProductsController extends Controller
 {
@@ -224,10 +225,22 @@ class ProductsController extends Controller
         $getCurrencies = Currency::select('currency_code', 'exchange_rate')->where('status', 1)->get()->toArray();
         // dd($getCurrencies); die;
 
+        // Get Ratings of all product
+        $ratings = Rating::with('user')->where('status', 1)->where('product_id', $id)->orderBy('id', 'desc')->get()->toArray();
+        // dd($ratings); die;
+
+        // Get Average Rating of Product
+        // echo $ratingsSum = Rating::where('status', 1)->where('product_id', $id)->sum('rating'); die;
+        $ratingsSum = Rating::where('status', 1)->where('product_id', $id)->sum('rating'); 
+        $ratingsCount = Rating::where('status', 1)->where('product_id', $id)->count(); 
+
+        $avgRating = round($ratingsSum/$ratingsCount, 2);
+        $avgStarRating = round($ratingsSum/ $ratingsCount);
+        
         $meta_title =       $productDetails['product_name'];
         $meta_description = $productDetails['description'];
         $meta_keywords =    $productDetails['product_name'];
-        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords', 'getCurrencies'));
+        return view('front.products.detail')->with(compact('productDetails', 'total_stock', 'relatedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords', 'getCurrencies', 'ratings', 'avgRating', 'avgStarRating'));
     }
 
     // First Way of getting the prices based on the attribute price in ajax request
