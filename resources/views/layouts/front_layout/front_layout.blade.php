@@ -63,6 +63,7 @@
 			font-style: italic;
 		}
 	</style>
+	<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=614c697ab1633800191bae9a&product=sticky-share-buttons" async="async"></script>
 </head>
 <body>
 

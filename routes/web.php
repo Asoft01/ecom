@@ -91,6 +91,10 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('view-order-invoice/{id}', 'OrdersController@viewOrderInvoice');
         Route::get('print-pdf-invoice/{id}', 'OrdersController@printPDFInvoice');
 
+        // View Order Charts
+        Route::get('view-orders-charts', 'OrdersController@viewOrdersCharts');
+
+
         // Shipping Charges
         Route::get('view-shipping-charges', 'ShippingController@viewShippingCharges');
         Route::match(['get', 'post'], 'edit-shipping-charges/{id}', 'ShippingController@editShippingCharges');
@@ -100,6 +104,9 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('users', 'UsersController@users');
 
         Route::post('update-user-status', 'UsersController@updateUserStatus');
+
+        // View Users Charts
+        Route::get('view-users-charts', 'UsersController@viewUsersCharts');
 
         // CMS Pages
         Route::get('cms-pages', 'CmsController@cmsPages');

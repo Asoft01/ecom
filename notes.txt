@@ -179,3 +179,18 @@ php artisan make:seeder CurrenciesTableSeeder
 
 
 https://codepen.io/hesguru/pen/BaybqXv
+
+https://sharethis.com/onboarding/?_id=614bb259050aa2ecb9a4ddaa&dmp_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MTRiYjI1OTA1MGFhMmVjYjlhNGRkYWEiLCJlbWFpbCI6Imxla2hhZDE5QGdtYWlsLmNvbSIsImlzcyI6InNzby5zaGFyZXRoaXMuY29tIiwiZXhwIjoxNjM1MTYyNDgzLCJpYXQiOjE2MzIzOTc2ODN9.OwdVTrhG5Yd_DknhLSwu6pWhHQRuOUKs_p-7IjSqqWg&platform_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MTRiYjI1OTA1MGFhMmVjYjlhNGRkYWEiLCJlbWFpbCI6Imxla2hhZDE5QGdtYWlsLmNvbSIsImlzcyI6InNzby5zaGFyZXRoaXMuY29tIiwiZXhwIjoxNjM1MTYyNDgzLCJpYXQiOjE2MzIzOTc2ODN9.injeITWGgThpUIFR6gUpCEqWQUjxLyH9oO76c4tTEJ4&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MTRiYjI1OTA1MGFhMmVjYjlhNGRkYWEiLCJlbWFpbCI6Imxla2hhZDE5QGdtYWlsLmNvbSIsImlzcyI6InNzby5zaGFyZXRoaXMuY29tIiwiZXhwIjoxNjM1MTYyNDgzLCJpYXQiOjE2MzIzOTc2ODN9.Y1aDBT7sfyhAkjWn3SCXT5m4tpcDMZhgzF709XHd4X4#
+
+
+https://www.addthis.com/dashboard#get-the-code/pub/ra-6144348242edf859
+
+
+To change timezone, for general website simply go to config\app.php 
+'timezone' => 'Europe/London',
+
+Bhet if for specific Model, this can be done in any of the Controller such as the way it is done for registerUser Controller
+
+https://canvasjs.com/html5-javascript-line-chart/
+
+https://canvasjs.com/html5-javascript-column-chart/

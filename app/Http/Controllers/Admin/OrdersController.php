@@ -12,6 +12,7 @@ use Session;
 use App\User;
 use App\Sms;
 use App\OrderStatus;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Auth;
 
@@ -386,5 +387,17 @@ class OrdersController extends Controller
         // Output the generated PDF to Browser
         $dompdf->stream();
         return view('admin.orders.order_invoice')->with(compact('orderDetails', 'userDetails'));
+    }
+
+    public function viewOrdersCharts(){
+         //    echo $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count(); die;
+         $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count();
+         // The submonths is for the previous month
+         $before_1_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(1))->count();
+         $before_2_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(2))->count();
+         $before_3_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(3))->count(); 
+         $ordersCount = array($current_month_orders, $before_1_month_orders, $before_2_month_orders, $before_3_month_orders);
+        // echo "<pre>"; print_r($ordersCount); die;
+        return view('admin.orders.view_orders_charts')->with(compact('ordersCount'));
     }
 }

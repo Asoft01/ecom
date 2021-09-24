@@ -230,7 +230,7 @@ class ProductsController extends Controller
         // dd($ratings); die;
 
         // Get Average Rating of Product
-        echo $ratingsSum = Rating::where('status', 1)->where('product_id', $id)->sum('rating'); die;
+        // echo $ratingsSum = Rating::where('status', 1)->where('product_id', $id)->sum('rating'); die;
         $ratingsSum = Rating::where('status', 1)->where('product_id', $id)->sum('rating'); 
         $ratingsCount = Rating::where('status', 1)->where('product_id', $id)->count(); 
 

@@ -38,6 +38,11 @@ class UsersController extends Controller
                 $user->email =    $data['email'];
                 $user->password = bcrypt($data['password']);
                 $user->status= 0;
+
+                // Set Default Timezones to India for Users Model Only
+                date_default_timezone_set("Asia/Kolkata");
+                $user->created_at = date('Y-m-d H:i:s');
+                $user->updated_at = date('Y-m-d H:i:s');
                 $user->save();
 
                 // Send Confirmation Email to the user

@@ -118,6 +118,7 @@
                         <input style="width:120px" type="number" name="pincode" id="pincode" placeholder="Check Pincode">
                         <button type="button" id="checkPincode">Go</button>
                     </div>
+                    <div class="sharethis-sticky-share-buttons"></div>
                 </div>
             </form>
         
@@ -326,4 +327,6 @@
         </div>
     </div>
 </div>
+<!-- Go to www.addthis.com/dashboard to customize your tools --> 
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6144348242edf859"></script>
 @endsection
