@@ -21,6 +21,7 @@ use App\Country;
 use App\Order;
 use App\OrdersProduct;
 use App\Currency;
+use App\OtherSetting;
 use DB;
 use App\Sms;
 use App\ShippingCharge;
@@ -118,19 +119,30 @@ class ProductsController extends Controller
                 $categoryDetails['catDetails']['description'] = "Search Products for ".$search_product;
 
                 // echo "<pre>"; print_r($categoryDetails); die;
+                // This works without searching with the category name
                 $categoryProducts   = Product::with('brand')->where(function($query) use($search_product) {
                     $query->where('product_name', 'like', '%'.$search_product.'%')
                     ->orWhere('product_code', 'like', '%'.$search_product.'%')
                     ->orWhere('product_color', 'like', '%'.$search_product.'%')
                     ->orWhere('description', 'like', '%'.$search_product.'%');
                 })->where('status', 1);
+
+
+                // $categoryProducts   = Product::with('brand')->join('categories','categories.id','=','products.category_id')->where(function($query) use($search_product) {
+                //     $query->where('products.product_name', 'like', '%'.$search_product.'%')
+                //     ->orWhere('products.product_code', 'like', '%'.$search_product.'%')
+                //     ->orWhere('products.product_color', 'like', '%'.$search_product.'%')
+                //     ->orWhere('products.description', 'like', '%'.$search_product.'%')
+                //     ->orWhere('categories.category_name', 'like', '%'.$search_product.'%');
+                // })->where('products.status', 1);
+
                 $categoryProducts = $categoryProducts->get();
                 // echo "<pre>"; print_r($categoryProducts); die;
 
                 $page_name= "Search Results";
                 return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'page_name'));
              
-            } else if($categoryCount> 0){
+            } else if($categoryCount > 0){
                 $categoryDetails = Category::catDetails($url);
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
                 // If Sort option selected by User 
@@ -574,7 +586,28 @@ class ProductsController extends Controller
             $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);
         }
 
+        // echo $total_price; die;
+
         // echo $total_weight; die;
+
+        // Get Min/Max Cart Amount 
+
+        $otherSettings = OtherSetting::where('id', 1)->first()->toArray();
+        // Check Min Cart Amount
+        if($total_price < $otherSettings['min_cart_value']){
+            $error_message = "Min Cart Amount must be ".$otherSettings['min_cart_value'];
+            Session::put('error_message', $error_message);
+            return redirect()->back();
+        }
+
+        // Check Maximum Cart Amount
+
+        
+        if($total_price > $otherSettings['max_cart_value']){
+            $error_message = "Max Cart Amount must be ".$otherSettings['max_cart_value'];
+            Session::put('error_message', $error_message);
+            return redirect()->back();
+        }
 
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         // echo "<pre>"; print_r($deliveryAddresses); die;

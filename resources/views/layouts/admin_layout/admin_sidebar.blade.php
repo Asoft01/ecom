@@ -59,6 +59,7 @@
              @else
                  <?php $active = ""; ?>
              @endif
+
               <li class="nav-item">
                 <a href="{{ url('admin/settings') }}" class="nav-link {{ $active }}">
                   <i class="far fa-circle nav-icon"></i>
@@ -66,6 +67,18 @@
                 </a>
               </li>
               @if(Session::get('page')=="update-admin-details")
+                <?php $active= "active"; ?>
+              @else
+                <?php $active = ""; ?>
+              @endif
+
+              <li class="nav-item">
+                <a href="{{ url('admin/update-other-settings') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update other settings </p>
+                </a>
+              </li>
+              @if(Session::get('page')=="update-other-settings")
                 <?php $active= "active"; ?>
               @else
                 <?php $active = ""; ?>

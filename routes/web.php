@@ -122,6 +122,9 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('delete-admin/{id}', 'AdminController@deleteAdminSubAdmin'); 
         Route::match(['get', 'post'], 'update-role/{id}', 'AdminController@updateRole');
 
+        // Other Settings 
+        Route::match(['get', 'post'], 'update-other-settings', 'AdminController@updateOtherSettings');
+
         // Curremcies
         Route::get('currencies', 'CurrencyController@currencies');
         Route::post('update-currency-status', 'CurrencyController@updateCurrencyStatus');

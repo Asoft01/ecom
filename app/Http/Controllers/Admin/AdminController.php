@@ -9,6 +9,7 @@ use Auth;
 use Session;
 use App\Admin;
 use App\AdminsRole;
+use App\OtherSetting;
 use Image;
 
 class AdminController extends Controller
@@ -316,7 +317,21 @@ class AdminController extends Controller
         $adminDetails = Admin::where('id', $id)->first()->toArray();
         $adminRoles = AdminsRole::where('admin_id', $id)->get()->toArray();
         $title = "Update " .$adminDetails['name']." (".$adminDetails['type'].") Roles / Permissions";
-        return view('admin.admins_subadmins.update_roles')->with(compact('title', 'adminDetails', 'adminRoles'));
-        
+        return view('admin.admins_subadmins.update_roles')->with(compact('title', 'adminDetails', 'adminRoles'));       
+    }
+
+    public function updateOtherSettings(Request $request){
+        Session::put('page', 'update-other-settings');
+        $otherSettings = OtherSetting::where('id', 1)->first()->toArray();
+        // dd($otherSettings); die;
+        $title = "Other Settings";
+        if($request->isMethod('post')){
+            $data = $request->all();
+            OtherSetting::where(['min_cart_value' => $data['min_cart_value'], 'max_cart_value' => $data['max_cart_value']]);
+            $message ="Min/Max Cart Value Updated Successfully";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+        }
+        return view('admin.other_settings')->with(compact('title', 'otherSettings'));
     }
 }
