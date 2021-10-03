@@ -28,6 +28,19 @@
 				<a href="https://www.youtube.com/StackDevelopers"><img width="60" height="60" src="{{asset('images/front_images/youtube.png') }}" title="youtube" alt="youtube"/></a>
 			</div>
 		</div>
-		<p class="pull-right"><a target="_blank" href="https://www.youtube.com/StackDevelopers">&copy; Stack Developers</a></p>
+		<p class="pull-right"><a target="_blank" href="#">&copy; A-Soft</a></p>
 	</div><!-- Container End -->
 </div>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+	(function(){
+	var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+	s1.async=true;
+	s1.src='https://embed.tawk.to/6159cd7125797d7a89020dd2/1fh3cl1a9';
+	s1.charset='UTF-8';
+	s1.setAttribute('crossorigin','*');
+	s0.parentNode.insertBefore(s1,s0);
+	})();
+</script>
+	<!--End of Tawk.to Script-->

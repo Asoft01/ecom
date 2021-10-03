@@ -2,45 +2,34 @@
 @section('content')
 
 <?php
-// echo "<pre>"; print_r($ordersCount); die;
-    $months= array();
-    $count = 0;
-    while($count <= 3){
-        $months[] = date('M Y', strtotime("-".$count." month"));
-        $count++;
-    }
-    // echo "<pre>"; print_r($months); die;
-    $dataPoints = array(
-        array("y" => $ordersCount[3], "label" => $months[3]),
-        array("y" => $ordersCount[2], "label" => $months[2]),
-        array("y" => $ordersCount[1], "label" => $months[1]),
-        array("y" => $ordersCount[0], "label" => $months[0]),
-    )
-
+    // echo "<pre>"; print_r($getUserCountries); die;
+    foreach ($getUserCountries as $key => $value) {
+      // Manual way of referencing
+      // $dataPoints[0]['label'] = $getUserCountries[$key]['country'];
+      $dataPoints[$key]['label'] = $getUserCountries[$key]['country'];
+      $dataPoints[$key]['y'] = $getUserCountries[$key]['count'];
+    }      
 ?>
+
 <script>
-window.onload = function () {
-
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	theme: "light2", // "light1", "light2", "dark1", "dark2"
-	title:{
-		text: "Orders Report"
-	},
-	axisY: {
-		title: "Number of Reports"
-	},
-	data: [{        
-		type: "column",  
-		showInLegend: true, 
-		legendMarkerColor: "grey",
-		legendText: "MMbbl = one million barrels",
-        dataPoints : <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-	}]
-});
-chart.render();
-
-}
+    window.onload = function() {
+    
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title: {
+            text: "Register Users Countries Count"
+        },
+        data: [{
+            type: "pie",
+            startAngle: 240,
+            yValueFormatString: "#,##\" Users\"",
+            indexLabel: "{label} ({y})",
+            dataPoints : <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+        }]
+    });
+    chart.render();
+    
+    }
 </script>
     
   <!-- Content Wrapper. Contains page content -->
@@ -55,7 +44,7 @@ chart.render();
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Orders Reports</li>
+              <li class="breadcrumb-item active">Users Countries Report</li>
             </ol>
           </div>
         </div>
@@ -77,7 +66,7 @@ chart.render();
             @endif
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Orders Reports</h3>
+                <h3 class="card-title">Users Countries Reports</h3>
                 
               </div>
               <!-- /.card-header -->

@@ -35,9 +35,10 @@
             @endif
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Users</h3>
+                <h3 class="card-title">Users | <a href="view-users-charts">View Reports</a></h3>
                 <a href="{{ url('admin/add-edit-user') }}" style="max-width: 150px; float:right; display: inline-block;" class="btn btn-block btn-success"> Add User </a>
               </div>
+            
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="users" class="table table-bordered table-hover">

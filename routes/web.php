@@ -107,6 +107,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 
         // View Users Charts
         Route::get('view-users-charts', 'UsersController@viewUsersCharts');
+        Route::get('view-users-countries', 'UsersController@viewUsersCountries');
 
         // CMS Pages
         Route::get('cms-pages', 'CmsController@cmsPages');

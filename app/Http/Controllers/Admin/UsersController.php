@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
@@ -44,5 +45,12 @@ class UsersController extends Controller
         $usersCount = array($current_month_users, $before_1_month_users, $before_2_month_users, $before_3_month_users);
 
         return view('admin.users.view_users_charts')->with(compact('usersCount'));
+    }
+
+    public function viewUsersCountries(){
+        //  echo "<pre>"; print_r("Hello"); die;
+        $getUserCountries = User::select('country', DB::raw('count(country) as count'))->groupBy('country')->get()->toArray();
+        // dd($getUserCountries);
+        return view('admin.users.view_users_countries')->with(compact('getUserCountries'));
     }
 }
