@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(OrderStatusTableSeeder::class);
         // $this->call(CmsPagesTableSeeder::class);
         // $this->call(CurrenciesTableSeeder::class);
-        $this->call(RatingsTableSeeder::class);
+        // $this->call(RatingsTableSeeder::class);
+        $this->call(WishlistsTableSeeder::class);
     }
 }

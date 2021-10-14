@@ -16,6 +16,7 @@ class Order extends Model
         return $this->hasMany('App\OrdersProduct', 'order_id');
     }
 
+
     public static function pushOrder($order_id){
         $orderDetails = Order::with('order_items')->where('id', $order_id)->first()->toArray();
         // dd($orderDetails); die;
@@ -55,7 +56,7 @@ class Order extends Model
             $orderDetails['order_items'][$key]['tax'] =           "";
             $orderDetails['order_items'][$key]['hsn'] =           "";
         }
-
+        
         $orderDetails['shipping_charges'] = 0;
         $orderDetails['giftwrap_charges'] = 0;
         $orderDetails['transaction_charges'] = 0;
@@ -99,7 +100,7 @@ class Order extends Model
         $result = json_decode($result, true);
 
         // print_r($result); die;
-
+        
         if(isset($result['status_code']) && $result['status_code'] == 1){
             // Update Orders Table Column is pushed to 1
             Order::where('id', $order_id)->update(['is_pushed' => 1]);

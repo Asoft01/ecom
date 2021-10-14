@@ -1,4 +1,7 @@
-<?php use App\Product; ?>
+<?php 
+use App\Product; 
+use App\Wishlist; 
+?>
 @extends('layouts.front_layout.front_layout')
 @section('content')
 <div class="span9">
@@ -111,7 +114,17 @@
                             @endforeach
                         </select>
                         <input name="quantity" type="number" class="span1" placeholder="Qty."/>
-                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                        <div>&nbsp;</div>
+                        <button type="submit" class="btn btn-large btn-primary btn-space"> Add to cart <i class=" icon-shopping-cart"></i></button>
+
+                        @php $countWishList = 0 @endphp
+                        @if(Auth::check())
+                            @php $countWishlist = WishList::countWishList($productDetails['id']) @endphp
+                            <button type="button" class="btn btn-large btn-primary btn-space"> Wishlist <i class="@if($countWishlist> 0) icon-heart @else  icon-heart-empty @endif"></i></button>
+                        @else 
+                            <button type="button" class="btn btn-large btn-primary btn-space userLogin"> Wishlist <i class=" icon-heart-empty"></i></button>
+                        @endif
+
                         <br><br>
 
                         <strong>Delivery</strong>

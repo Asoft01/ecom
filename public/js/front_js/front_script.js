@@ -511,5 +511,9 @@ $(document).ready(function(){
                 alert("Error");
             }
         });
-    })
+    });
+
+    $(".userLogin").click(function(){
+        alert("Login to products in your wish list");
+    });
 });
